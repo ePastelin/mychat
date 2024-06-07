@@ -2,6 +2,7 @@
 
 @import '../styles/button.css';
 @import '../styles/input.css';
+@import '../styles/chat.css';
 
 @tailwind base;
 @tailwind components;

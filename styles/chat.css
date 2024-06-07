@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sender {
+    @apply flex-grow p-2 pl-8 pr-8 border resize-none rounded-full h-10 max-h-24 overflow-auto
+}
+
+.circle {
+    @apply right-3 flex items-center justify-center w-10 h-10 bg-green-500 rounded-full cursor-pointer
+}
+
+.attach {
+    @apply absolute left-3 text-2xl text-icons
+}
+
+.messageLayout {
+    @apply flex flex-col flex-grow p-4 overflow-auto bg-chatBackground
+}
+
+.profilebg {
+    @apply flex items-center p-4 bg-white shadow-inner-bottom
+}
+
+.icon {
+    @apply text-2xl cursor-pointer 
+}
+
+.profilePhoto {
+    @apply w-10 h-10 rounded-full mx-4
+}
+
+.messageBubble {
+    @apply p-2 rounded-lg max-w-xs md:max-w-md lg:max-w-lg shadow-dropshadow-message
+}

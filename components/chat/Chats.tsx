@@ -1,9 +1,10 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 function Chat({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <section className='flex justify-between h-12'>
+      <Link className='flex justify-between h-12' href='chats/2'>
         <div className='flex gap-4'>
           <Image src='/images/profile.jpg' alt='logo' width={200} height={200} className=' rounded-full h-10 w-10' />
           <div>
@@ -12,7 +13,7 @@ function Chat({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className='flex flex-col items-end'>{children}</div>
-      </section>
+      </Link>
       <div className='h-[1px] bg-separator'></div>
     </>
   )

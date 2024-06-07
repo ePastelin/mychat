@@ -35,6 +35,7 @@ export const theme = {
       title: '#1F1F1F',
       border: '#42FF00',
       separator: '#E2E2E2',
+      icons: '#848484',
     },
     backgroundImage: {
       'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
