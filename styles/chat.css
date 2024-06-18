@@ -33,3 +33,27 @@
 .messageBubble {
     @apply p-2 rounded-lg max-w-xs md:max-w-md lg:max-w-lg shadow-dropshadow-message
 }
+
+.phone-selector {
+    @apply absolute bottom-20 p-2 flex items-center justify-center content-center w-screen
+  }
+
+
+.phone-selector-menu {
+    @apply bg-white rounded-lg shadow-lg
+}
+  
+
+  .phone-number-option {
+    @apply p-4 border-b border-gray-300 cursor-pointer
+  }
+  
+  .phone-number-option:last-child {
+    border-bottom: none;
+  }
+  
+  .selection-indicator {
+    width: 100%;
+    height: 5px;
+    background-color: blue;
+  }

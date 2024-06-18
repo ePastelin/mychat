@@ -11,7 +11,7 @@ export const useChat = (messagesEndRef: any) => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages])
+  }, [messages, messagesEndRef])
 
   return { messages, message, setMessage, setMessages }
 }

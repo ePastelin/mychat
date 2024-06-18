@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function Profile() {
   return (
     <div className='profilebg'>
-      <Link href='/chats'>
+      <Link href='/chats' className=' lg:hidden'>
         <IoIosArrowBack className='icon' />
       </Link>
       <Image src='/images/profile.jpg' width={20} height={20} alt='Profile' className='profilePhoto' />

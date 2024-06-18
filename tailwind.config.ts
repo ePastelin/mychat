@@ -20,6 +20,8 @@ export const theme = {
         '100': '#514DFF',
         '150': '#3430FF',
       },
+      sendTemplate: '#FF984D',
+      sendTemplateSuccess: '#04C900',
       secondary: '#008D68',
       subtitle: {
         '50': '#4F5F75',
