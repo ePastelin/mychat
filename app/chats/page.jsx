@@ -6,6 +6,7 @@ import { Footer } from '@/components/common'
 import Side from '@/components/common/side/Side'
 import { Chat, Search } from '@/components/filters'
 import Template from '@/components/template/Template'
+import Users from '@/components/users/Users'
 import { useChat } from '@/hooks/chat'
 import { useRef, useState } from 'react'
 
@@ -55,6 +56,7 @@ export default function Chats() {
           </div>
         )}
         {screen === 2 && <Template />}
+        {screen === 3 && <Users />}
         <div className='h-screen md:col-span-8 w-full flex flex-col'>
           <Profile />
           <MessageSection messages={messages} messagesEndRef={messagesEndRef} />

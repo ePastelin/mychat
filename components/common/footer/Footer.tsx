@@ -40,7 +40,7 @@ export default function Footer() {
         ))}
         {showPhoneSelector && (
           <div className='phone-selector'>
-            <PhoneSelector onSelect={(phone) => console.log(phone)} setShow={setShowPhoneSelector} />
+            <PhoneSelector onSelect={(phone: any) => console.log(phone)} setShow={setShowPhoneSelector} />
           </div>
         )}
       </div>

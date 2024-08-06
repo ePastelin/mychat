@@ -7,4 +7,5 @@ export interface Input {
   value: string
   setValue: Dispatch<SetStateAction<any>>
   type: string
+  setError: Dispatch<SetStateAction<any>>
 }

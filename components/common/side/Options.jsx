@@ -1,6 +1,7 @@
 'use client'
 
 import { IoPhonePortraitOutline } from 'react-icons/io5'
+import { LuUsers } from 'react-icons/lu'
 import { TbMessage2Minus } from 'react-icons/tb'
 import { CgTemplate } from 'react-icons/cg'
 import Option from '../footer/Option'
@@ -13,7 +14,7 @@ export default function Options({ setScreen, screen }) {
   const pathname = usePathname()
   console.log(pathname)
 
-  const handleOptionClick = (option: any) => {
+  const handleOptionClick = (option) => {
     setSelectedOption(option.id)
     if (option.number) {
       setScreen(option.number)
@@ -25,6 +26,7 @@ export default function Options({ setScreen, screen }) {
   const options = [
     { id: 'home', text: 'Mensajes', number: 1, icon: <TbMessage2Minus className='text-3xl text-text-100 z-10' /> },
     { id: 'template', text: 'Plantillas', number: 2, icon: <CgTemplate className='text-3xl text-text-50 z-10' /> },
+    { id: 'users', text: 'Usuarios', number: 3, icon: <LuUsers className='text-3xl text-text-50 z-10' /> },
   ]
 
   return (
@@ -40,4 +42,3 @@ export default function Options({ setScreen, screen }) {
     </footer>
   )
 }
-

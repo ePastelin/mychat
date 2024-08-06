@@ -12,7 +12,7 @@ export default function Option({
   onClick: () => void
 }) {
   return (
-    <div className='flex flex-col items-center justify-center gap-1' onClick={onClick}>
+    <div className='flex flex-col items-center justify-center gap-1 hover:cursor-pointer' onClick={onClick}>
       {selected && <Selection />}
       {children}
       <p className={`z-10 ${selected ? ' text-text-100' : 'text-text-50'}`}>{text}</p>

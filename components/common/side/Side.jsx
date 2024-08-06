@@ -1,8 +1,12 @@
 import Image from 'next/image'
 import { IoLogOut, IoPhonePortraitOutline } from 'react-icons/io5'
 import Option from './Options'
+import useAuth from '@/hooks/auth/useAuth'
 
 export default function Side({ setScreen, screen }) {
+
+  const { handleLogout } = useAuth()
+
   return (
     <div className='flex flex-col h-screen justify-between items-center'>
       <section className='flex flex-col gap-4 px-5 py-12 bg-senderMessage items-center'>
@@ -23,7 +27,7 @@ export default function Side({ setScreen, screen }) {
           </div>
         </section>
       </section>
-      <IoLogOut className='text-4xl text-red-500 z-10 mb-8' />
+      <IoLogOut className='text-4xl text-red-500 z-10 mb-8 hover:cursor-pointer' onClick={handleLogout}/>
     </div>
   )
 }

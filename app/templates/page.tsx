@@ -2,14 +2,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Header } from '@/components/chat'
 import { Footer } from '@/components/common'
-import { useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 
 export default function Templates() {
   const [plantilla, setPlantilla] = useState('')
   const [idioma, setIdioma] = useState('')
   const [sent, setSent] = useState(false)
 
-  const handleSelect = (e, set) => {
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value)
     console.log(e.target.value)
   }

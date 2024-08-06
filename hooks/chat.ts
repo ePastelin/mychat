@@ -2,6 +2,7 @@
 
 import { SendMenssage } from '@/types/common/chat'
 import { useEffect, useState } from 'react'
+import { sendMessage } from './api/fetcher'
 
 export const useChat = (messagesEndRef: any) => {
   const [messages, setMessages] = useState([])
@@ -25,7 +26,8 @@ export const useMessages = () => {
     setMessages([...messages, incomingMessage])
   }
 
-  const handleSendMessage: SendMenssage = (message, setMessages, setMessage, textareaRef, messages) => {
+  const handleSendMessage: SendMenssage = async (message, setMessages, setMessage, textareaRef, messages) => {
+    await sendMessage({ message })
     if (message.trim()) {
       setMessages([...messages, { text: message, sender: 'me' }])
       setMessage('')
