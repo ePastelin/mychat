@@ -26,10 +26,12 @@ export const useMessages = () => {
     setMessages([...messages, incomingMessage])
   }
 
-  const handleSendMessage: SendMenssage = async (message, setMessages, setMessage, textareaRef, messages) => {
-    await sendMessage({ message })
+  const handleSendMessage: SendMenssage = async (message, setMessages, setMessage, textareaRef, messages, idChat) => {
+    console.log('antes de ser enviado', message)
+    await sendMessage({ message, idChat })
     if (message.trim()) {
-      setMessages([...messages, { text: message, sender: 'me' }])
+      setMessages([...messages, { message: message, sender: 1 }])
+      console.log('ESto se envía con', messages)
       setMessage('')
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto'

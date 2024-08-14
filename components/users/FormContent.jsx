@@ -34,7 +34,7 @@ export default function FormContent({ setEdit, user, numbers }) {
   console.log(user)
   console.log(user.phoneNumbers, 'user.phoneNumbers')
   // Convertir numbers a strings y excluir los que ya están en phoneNumbers
-  const availableNumbers = user.phone_numbers && numbers.filter(number => !phoneNumbers.includes(String(number.number)));
+  const availableNumbers = user.phone_numbers && numbers.filter(number => !phoneNumbers.includes(String(number.idnumber)));
   console.log(availableNumbers, 'availableNumbers')
 
   return (
@@ -86,6 +86,8 @@ export default function FormContent({ setEdit, user, numbers }) {
         className="mb-4"
       />
 
+        {console.log(phoneNumbers, 'phone')}
+
       {phoneNumbers.map((phone, index) => (
         <div key={index} className="flex items-center space-x-4 mb-4">
           <TextField
@@ -104,7 +106,7 @@ export default function FormContent({ setEdit, user, numbers }) {
             className="flex-1"
           >
             {availableNumbers.map((number, idx) => (
-              <MenuItem key={idx} value={String(number.number)}>
+              <MenuItem key={idx} value={String(number.idnumber)}>
                 {number.number}
               </MenuItem>
             ))}

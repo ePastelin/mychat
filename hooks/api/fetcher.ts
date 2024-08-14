@@ -49,5 +49,5 @@ export const createNumber = async (information: any) => {
 }
 
 export const sendMessage = async (message: any) => {
-  await chatApi.post('/send', message, headers)
+  await chatApi.post('/chat/send', message, headers)
 }

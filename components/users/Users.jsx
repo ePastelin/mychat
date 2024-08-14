@@ -60,7 +60,7 @@ export default function Users() {
         {data.users &&
           data.users.map((user) => (
             <div key={user.id} className='w-full flex items-center gap-4 justify-between'>
-              <b className='text-sm'>{user.fullname}</b>{' '}
+              <b className='text-sm'>{user.username}</b>{' '}
               <div className='flex gap-3'>
                 <MdDeleteOutline className='text-red-500 text-4xl cursor-pointer' onClick={() => deleteUser(user.id, data.users, mutate)} />
                 <MdOutlineEdit className='text-blue-500 text-4xl cursor-pointer' onClick={() => handleEditClick(user)} />

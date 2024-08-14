@@ -4,6 +4,7 @@ export interface SenderProps {
   setMessage: any
   messages: [{ sender: string; text: string }]
   setMessages: any
+  idChat: number
 }
 
 export type SendMenssage = (
@@ -12,6 +13,7 @@ export type SendMenssage = (
   setMessage: any,
   textareaRef: any,
   messages: [{ sender: string; text: string }],
+  idChat: number,
 ) => void
 
 export interface InputProps {
@@ -20,9 +22,10 @@ export interface InputProps {
   setMessage: any
   messages: [{ sender: string; text: string }]
   setMessages: any
+  idChat: number
 }
 
 export interface Message {
-  messages: [{ sender: string; text: string }]
+  messages: [{ sender: number; message: string }]
   messagesEndRef: any
 }

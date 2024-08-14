@@ -1,21 +1,29 @@
 'use client'
 
 import { Header, Input, MessageSection, Profile, ReadChat, UnreadChat } from '@/components/chat'
-
 import { Footer } from '@/components/common'
 import Side from '@/components/common/side/Side'
+import useSWR from 'swr'
 import { Chat, Search } from '@/components/filters'
 import Template from '@/components/template/Template'
 import Users from '@/components/users/Users'
 import { useChat } from '@/hooks/chat'
 import { useRef, useState } from 'react'
+import { fetcher } from '@/hooks/api/fetcher'
+import { Message } from '@/components/chat/messages'
+
+const API = process.env.NEXT_PUBLIC_API_ROUTE
 
 export default function Chats() {
+  const { data, error, mutate } = useSWR(`${API}/chat`, fetcher)
   const messagesEndRef = useRef(null)
   const textareaRef = useRef(null)
   const [screen, setScreen] = useState(1)
-
+  const [idChat, setIdChat] = useState(null)
   const { messages, setMessages, message, setMessage } = useChat(messagesEndRef)
+
+  // Ensure chats is an empty array if data is not yet available
+  const chats = data?.chats || []
 
   return (
     <>
@@ -25,14 +33,7 @@ export default function Chats() {
           <Chat />
           <Search />
           <section className='mt-12 flex flex-col gap-6 mb-20'>
-            <ReadChat />
-            <UnreadChat />
-            <ReadChat />
-            <ReadChat />
-            <UnreadChat />
-            <UnreadChat />
-            <UnreadChat />
-            <UnreadChat />
+            {/* Aquí va lo de los chats pero en versión mobile */}
           </section>
         </div>
         <Footer />
@@ -44,24 +45,31 @@ export default function Chats() {
             <Chat />
             <Search />
             <section className='mt-8 flex flex-col gap-6 h-[560px] overflow-y-auto no-scrollbar'>
-              <ReadChat desktop={true} />
-              <UnreadChat desktop={true} />
-              <ReadChat desktop={true} />
-              <ReadChat desktop={true} />
-              <UnreadChat desktop={true} />
-              <UnreadChat desktop={true} />
-              <UnreadChat desktop={true} />
-              <UnreadChat desktop={true} />
+              {chats.map((chat) => (
+                <UnreadChat 
+                  key={chat.id} 
+                  desktop={true} 
+                  chat={chat} 
+                  set={setIdChat} 
+                />
+              ))}
             </section>
           </div>
         )}
         {screen === 2 && <Template />}
         {screen === 3 && <Users />}
-        <div className='h-screen md:col-span-8 w-full flex flex-col'>
-          <Profile />
-          <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
-          <Input message={message} setMessage={setMessage} textareaRef={textareaRef} messages={messages} setMessages={setMessages} />
-        </div>
+        {idChat && (
+          <Message 
+            message={message} 
+            messages={messages} 
+            messagesEndRef={messagesEndRef} 
+            textareaRef={textareaRef} 
+            setMessage={setMessage} 
+            setMessages={setMessages} 
+            idChat={idChat} 
+            chat={chats.find(c => c.id === idChat)} 
+          />
+        )}
       </div>
     </>
   )
