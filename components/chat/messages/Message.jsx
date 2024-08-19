@@ -1,9 +1,16 @@
+import { useEffect, useState } from 'react';
 import { fetcher } from '@/hooks/api/fetcher'
 import {Profile, MessageSection, Input} from './index'
 import useSWR, { mutate } from 'swr'
+import { useChat, useMessages } from '@/hooks/chat.js';
 const API = process.env.NEXT_PUBLIC_API_ROUTE
 
-export default function Message({message, messages, setMessage, textareaRef, setMessages, messagesEndRef, idChat, chat}) {
+export default function Message({ idChat, chat}) {
+
+    const [message, setMessage] = useState()
+
+    const { messages, setMessages, textareaRef, handleSendMessage} = useMessages(idChat)
+    const { messagesEndRef } = useChat(messages)
 
     const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
         onSuccess: (fetchedMessages) => {
@@ -15,19 +22,6 @@ export default function Message({message, messages, setMessage, textareaRef, set
     if (error) return <div>failed to load</div>
     if (!data) return <div>loading</div>
 
-    // Al enviar un mensaje, lo agregas a messages
-    const handleSendMessage = (newMessage) => {
-        // Agrega el nuevo mensaje localmente
-        setMessages([...messages, newMessage])
-
-        // Aquí iría el código para enviar el mensaje al servidor...
-        // Luego, vuelve a mutar el SWR para sincronizar con el backend
-        mutate(`${API}/chat/${idChat}`, async () => {
-            // Obtén los mensajes actualizados del servidor
-            const updatedMessages = await fetcher(`${API}/chat/${idChat}`)
-            return updatedMessages
-        })
-    }
 
     const {socio_name} = chat
 

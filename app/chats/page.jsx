@@ -7,7 +7,7 @@ import useSWR from 'swr'
 import { Chat, Search } from '@/components/filters'
 import Template from '@/components/template/Template'
 import Users from '@/components/users/Users'
-import { useChat } from '@/hooks/chat'
+import { useChat } from '@/hooks/chat.js'
 import { useRef, useState } from 'react'
 import { fetcher } from '@/hooks/api/fetcher'
 import { Message } from '@/components/chat/messages'
@@ -16,11 +16,8 @@ const API = process.env.NEXT_PUBLIC_API_ROUTE
 
 export default function Chats() {
   const { data, error, mutate } = useSWR(`${API}/chat`, fetcher)
-  const messagesEndRef = useRef(null)
-  const textareaRef = useRef(null)
   const [screen, setScreen] = useState(1)
   const [idChat, setIdChat] = useState(null)
-  const { messages, setMessages, message, setMessage } = useChat(messagesEndRef)
 
   // Ensure chats is an empty array if data is not yet available
   const chats = data?.chats || []
@@ -60,12 +57,6 @@ export default function Chats() {
         {screen === 3 && <Users />}
         {idChat && (
           <Message 
-            message={message} 
-            messages={messages} 
-            messagesEndRef={messagesEndRef} 
-            textareaRef={textareaRef} 
-            setMessage={setMessage} 
-            setMessages={setMessages} 
             idChat={idChat} 
             chat={chats.find(c => c.id === idChat)} 
           />

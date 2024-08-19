@@ -11,7 +11,7 @@ export default function Templates() {
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value)
-    console.log(e.target.value)
+    // console.log(e.target.value)
   }
 
   return (
