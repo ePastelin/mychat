@@ -29,9 +29,10 @@ export function UnreadChat({ desktop, chat, set }: { desktop?: boolean; chat: an
   )
 }
 
-export function ReadChat({ desktop, name, lastMessage }: { desktop?: boolean; name: string; lastMessage: string }) {
+export function ReadChat({ desktop, chat, set }: { desktop?: boolean; chat: any; set:any }) {
+  const {socio_name, last_message, id} = chat
   return (
-    <Chat desktop={desktop} name={name} lastMessage={lastMessage}>
+    <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set}>
       <p className=' text-sm text-text-50'>10:00 AM</p>
     </Chat>
   )
