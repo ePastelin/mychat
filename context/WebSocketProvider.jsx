@@ -4,10 +4,11 @@ const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
+    const API = process.env.NEXT_PUBLIC_API_ROUTE
 
     useEffect(() => {
         // Crear la conexión WebSocket
-        const ws = new WebSocket('wss://mychatapi-oxk8.onrender.com');
+        const ws = new WebSocket('https://16c3-45-231-171-201.ngrok-free.app');
 
         ws.onopen = () => {
             console.log('WebSocket conectado');

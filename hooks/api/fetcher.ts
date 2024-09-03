@@ -8,6 +8,7 @@ const token = Cookies.get('token')
 const headers = {
   headers: {
     'x-token': token,
+    'ngrok-skip-browser-warning': 'true'
   },
 }
 

@@ -26,6 +26,6 @@ export interface InputProps {
 }
 
 export interface Message {
-  messages: [{ sender: number; message: string }]
+  messages: [{ sender: number; message: string, status: string, date: Date }]
   messagesEndRef: any
 }

@@ -10,6 +10,7 @@ const useAuth = () => {
     const isLogged = async () => {
         try {
             const { ok } = await fetcher('/auth/logged')
+            console.log(ok)
             if ( !ok ) {
                 return false
             }

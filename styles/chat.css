@@ -31,7 +31,7 @@
 }
 
 .messageBubble {
-    @apply p-2 rounded-lg max-w-xs md:max-w-md lg:max-w-lg shadow-dropshadow-message
+    @apply p-2 rounded-lg max-w-xs md:max-w-md lg:max-w-lg shadow-dropshadow-message flex flex-col
 }
 
 .phone-selector {
