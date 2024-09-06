@@ -6,18 +6,18 @@ import { useChat } from '@/hooks/chat'
 import { useRef } from 'react'
 
 const Chat = () => {
-  const messagesEndRef = useRef(null)
-  const textareaRef = useRef(null)
+  // const messagesEndRef = useRef(null)
+  // const textareaRef = useRef(null)
 
-  const { messages, setMessages, message, setMessage } = useChat(messagesEndRef)
+  // const { messages, setMessages, message, setMessage } = useChat(messagesEndRef)
 
-  return (
-    <div className='flex flex-col h-screen'>
-      <Profile />
-      <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
-      <Input message={message} setMessage={setMessage} textareaRef={textareaRef} messages={messages} setMessages={setMessages} />
-    </div>
-  )
+  // return (
+  //   <div className='flex flex-col h-screen'>
+  //     <Profile />
+  //     <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
+  //     <Input message={message} setMessage={setMessage} textareaRef={textareaRef} messages={messages} setMessages={setMessages} />
+  //   </div>
+  // )
 }
 
 export default Chat

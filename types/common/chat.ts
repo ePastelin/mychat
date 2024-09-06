@@ -23,9 +23,11 @@ export interface InputProps {
   messages: [{ sender: string; text: string }]
   setMessages: any
   idChat: number
+  handleSendMessage: any
+  adjustTextareaHeight: any
 }
 
 export interface Message {
-  messages: [{ sender: number; message: string, status: string, date: Date }]
+  messages: [{ sender: number; message: string, status: string, date: Date, id: string }]
   messagesEndRef: any
 }

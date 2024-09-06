@@ -1,18 +1,26 @@
+'use client'
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
+    const [incomingMessage, setIncomingMessage] = useState(null);
     const API = process.env.NEXT_PUBLIC_API_ROUTE
 
     useEffect(() => {
         // Crear la conexión WebSocket
-        const ws = new WebSocket('https://16c3-45-231-171-201.ngrok-free.app');
+        const ws = new WebSocket('wss://mychatapi-oxk8.onrender.com/api');
 
         ws.onopen = () => {
             console.log('WebSocket conectado');
             setSocket(ws);
+        };
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            setIncomingMessage(message);
         };
 
         ws.onerror = (error) => {
@@ -31,11 +39,10 @@ export const WebSocketProvider = ({ children }) => {
     }, []);
 
     return (
-        <WebSocketContext.Provider value={socket}>
+        <WebSocketContext.Provider value={{ socket, incomingMessage }}>
             {children}
         </WebSocketContext.Provider>
-    );
-};
+    );};
 
 export const useWebSocket = () => {
     return useContext(WebSocketContext);

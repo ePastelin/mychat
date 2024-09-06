@@ -1,9 +1,4 @@
-import { useMessages } from '@/hooks/chat'
-import { SenderProps } from '@/types/common/chat'
-
-export default function Sender({ textareaRef, message, setMessage, setMessages, messages, idChat }: SenderProps) {
-  const { handleSendMessage, adjustTextareaHeight } = useMessages(idChat)
-
+export default function Sender({ message, setMessage, handleSendMessage, adjustTextareaHeight, textareaRef }) {
   return (
     <textarea
       ref={textareaRef}
@@ -17,7 +12,7 @@ export default function Sender({ textareaRef, message, setMessage, setMessages, 
       onKeyPress={(e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault()
-          handleSendMessage(message, setMessage)
+          handleSendMessage()
         }
       }}
       rows={1}
@@ -25,3 +20,4 @@ export default function Sender({ textareaRef, message, setMessage, setMessages, 
     />
   )
 }
+

@@ -1,43 +1,31 @@
-import { useEffect, useState } from 'react';
-import { fetcher } from '@/hooks/api/fetcher'
-import {Profile, MessageSection, Input} from './index'
-import useSWR, { mutate } from 'swr'
+import { Profile, MessageSection, Input } from './index';
+import useSWR from 'swr';
 import { useChat, useMessages } from '@/hooks/chat.js';
-const API = process.env.NEXT_PUBLIC_API_ROUTE
+import { fetcher } from '@/hooks/api/fetcher';
 
-export default function Message({ idChat, chat}) {
+const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
-    const [message, setMessage] = useState()
+export default function Message({ idChat, chat }) {
+  const { messages, setMessages, message, setMessage, handleSendMessage, adjustTextareaHeight, textareaRef} = useMessages(idChat);
+  const { messagesEndRef } = useChat(messages);
 
-    const { messages, setMessages, textareaRef, handleSendMessage} = useMessages(idChat)
-    const { messagesEndRef } = useChat(messages)
+  const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
+    onSuccess: (fetchedMessages) => {
+      setMessages(fetchedMessages);
+    }
+  });
 
-    const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
-        onSuccess: (fetchedMessages) => {
-            // Actualiza los mensajes cuando los datos se cargan
-            setMessages(fetchedMessages)
-        }
-    })
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
 
-    if (error) return <div>failed to load</div>
-    if (!data) return <div>loading</div>
+  const { socio_name } = chat;
 
-
-    const {socio_name} = chat
-
-    return (
-        <div className='h-screen md:col-span-8 w-full flex flex-col'>
-            <Profile name={socio_name} />
-            <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
-            <Input 
-                message={message} 
-                setMessage={setMessage} 
-                textareaRef={textareaRef} 
-                messages={messages} 
-                setMessages={setMessages} 
-                idChat={idChat}
-                onSendMessage={handleSendMessage} // Usa esta función cuando envíes un mensaje
-            />
-        </div>
-    )
+  return (
+    <div className="h-screen md:col-span-8 w-full flex flex-col">
+      <Profile name={socio_name} />
+      <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
+      <Input idChat={idChat} message={message} setMessage={setMessage} handleSendMessage={handleSendMessage} adjustTextareaHeight={adjustTextareaHeight} textareaRef={textareaRef}/>
+    </div>
+  );
 }
+

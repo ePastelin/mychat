@@ -20,11 +20,11 @@ function Chat({ children, desktop, name, lastMessage, id, set }: { children: Rea
 
 export function UnreadChat({ desktop, chat, set }: { desktop?: boolean; chat: any; set: any }) {
   // console.log(chat)
-  const {socio_name, last_message, id} = chat
+  const {socio_name, last_message, id, unread} = chat
   return (
     <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set}>
       <p className='text-sm text-notification'>10:00 AM</p>
-      <div className='rounded-full bg-notification w-6 h-6 mt-1 text-center text-white text-sm flex items-center justify-center'>3</div>
+      <div className='rounded-full bg-notification w-6 h-6 mt-1 text-center text-white text-sm flex items-center justify-center'>{unread}</div>
     </Chat>
   )
 }

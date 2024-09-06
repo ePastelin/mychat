@@ -10,15 +10,21 @@ import ChatList from '@/components/chat/ChatList'
 import ChatDetails from '@/components/chat/ChatDetails'
 import Template from '@/components/template/Template'
 import Users from '@/components/users/Users'
+import { useChatInfo } from '@/hooks/chat'
 
 const API = process.env.NEXT_PUBLIC_API_ROUTE
 
 export default function Chats() {
-  const { data } = useSWR(`${API}/chat`, fetcher)
+  const {chats, setChats} = useChatInfo()
+  useSWR(`${API}/chat`, fetcher, {
+    onSuccess: (data) => {
+      setChats(data?.chats || [])
+    }
+  })
   const [screen, setScreen] = useState(1)
   const [idChat, setIdChat] = useState(null)
-
-  const chats = data?.chats || []
+  
+  console.log(chats)
 
   return (
     <>
