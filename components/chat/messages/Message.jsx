@@ -7,7 +7,7 @@ const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
 export default function Message({ idChat, chat }) {
   const { messages, setMessages, message, setMessage, handleSendMessage, adjustTextareaHeight, textareaRef} = useMessages(idChat);
-  const { messagesEndRef } = useChat(messages);
+  const { messagesEndRef } = useChat(messages, idChat);
 
   const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
     onSuccess: (fetchedMessages) => {

@@ -3,16 +3,22 @@
 import { useWebSocket } from '@/context/WebSocketProvider'
 import { useEffect, useRef, useState } from 'react'
 
-export const useChat = (messages) => {
+export const useChat = (messages, idChat) => {
 
   const messagesEndRef = useRef(null)
+  const [first, setFirst] = useState(true)
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+      messagesEndRef.current.scrollIntoView({ behavior: `${first ? 'auto' : 'smooth'}` })
+      setFirst(false)
     }
   }, [messages, messagesEndRef])
 
+  useEffect(() => {
+    setFirst(true)
+  }, [idChat])
+  
   return { messagesEndRef }
 }
 
@@ -29,7 +35,7 @@ if (incomingMessage.message) {
       setChats((prevChats) =>
         prevChats.map((chat) =>
           chat.id === incomingMessage.idChat
-            ? { ...chat, last_message: incomingMessage.message, unread: incomingMessage.sender === 0 ? chat.unread + 1 : chat.unread}
+            ? { ...chat, last_message: incomingMessage.message, unread: incomingMessage.sender === 0 ? chat.unread + 1 : chat.unread, last_date: Date.now()}
             : chat
         )
       );
@@ -57,6 +63,8 @@ export const useMessages = (idChat) => {
   const messagesRef = useRef(messages);
   const textareaRef = useRef(null);
 
+
+
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
@@ -75,11 +83,11 @@ export const useMessages = (idChat) => {
   useEffect(() => {
     if (incomingMessage && incomingMessage.status ) {
 
-      console.log(incomingMessage)
+      console.log(incomingMessage, "Aquí donde se cambia el esado", messages)
 
         setMessages((prevMessages) =>
           prevMessages.map((msg) =>
-            msg.id === incomingMessage.idMessage
+            msg.id === incomingMessage.idMessage || msg.idMessage === incomingMessage.idMessage
               ? { ...msg, status: incomingMessage.status }
               : msg
           )
@@ -92,9 +100,9 @@ export const useMessages = (idChat) => {
   useEffect(() => {
 
     console.log('Estoy entrando a enviar la lectura', idChat)
-    if (idChat) {
+    if (idChat && socket) {
       const unreadMessages = messages.filter(
-        (message) => message.sender === 0 && message.status === 'sent' && idChat === message.idChat
+        (message) => message.sender === 0 && message.status === 'sent' && idChat === message.idChat 
       );
 
       console.log(unreadMessages, 'Acá los mensajes sin leer')
@@ -102,7 +110,7 @@ export const useMessages = (idChat) => {
       unreadMessages.forEach((msg) => {
         socket.send(JSON.stringify({
           action: 'message_read',
-          idMessage: msg.idMessage,
+          idMessage: msg.id,
           idChat: idChat
         }));
       });

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import formatDate from '@/utils/formatDate'
 
 function Chat({ children, desktop, name, lastMessage, id, set }: { children: React.ReactNode; desktop?: boolean; name: string, lastMessage: string, id: number, set: any }) {
   return (
@@ -19,11 +20,10 @@ function Chat({ children, desktop, name, lastMessage, id, set }: { children: Rea
 }
 
 export function UnreadChat({ desktop, chat, set }: { desktop?: boolean; chat: any; set: any }) {
-  // console.log(chat)
   const {socio_name, last_message, id, unread} = chat
   return (
     <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set}>
-      <p className='text-sm text-notification'>10:00 AM</p>
+      <p className='text-sm text-notification'>{formatDate(chat.last_date, true)}</p>
       <div className='rounded-full bg-notification w-6 h-6 mt-1 text-center text-white text-sm flex items-center justify-center'>{unread}</div>
     </Chat>
   )
@@ -33,7 +33,7 @@ export function ReadChat({ desktop, chat, set }: { desktop?: boolean; chat: any;
   const {socio_name, last_message, id} = chat
   return (
     <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set}>
-      <p className=' text-sm text-text-50'>10:00 AM</p>
+      <p className=' text-sm text-text-50'>{formatDate(chat.last_date, true)}</p>
     </Chat>
   )
 }
