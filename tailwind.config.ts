@@ -7,6 +7,21 @@ export const theme = {
       'inner-bottom': 'inset 0 -1px 1px rgba(0, 0, 0, 0.20)',
       'dropshadow-message': '0 1px 2px 0 rgba(0, 0, 0, 0.20)',
     },
+    keyframes: {
+      slideUp: {
+        '0%': { transform: 'translateY(20px)', opacity: 0},
+        '100%': { transform: 'translateY(0)', opacity: 1}
+      },
+      slideDown: {
+        '0%': { transform: 'translateY(0)', opacity: 1},
+        '100%': { transform: 'translateY(20px)', opacity: 0}
+      }
+    },
+    animation: {
+      slideUp: 'slideUp 0.5s ease-out',
+      slideDown: 'slideDown 0.5s ease-out'
+
+    },
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],
     },
@@ -38,6 +53,10 @@ export const theme = {
       border: '#42FF00',
       separator: '#E2E2E2',
       icons: '#848484',
+      pending: '#F4A261',
+      approved: '#2A9D8F',
+      refused: '#E76F51',
+      archived: '#6D6875'
     },
     backgroundImage: {
       'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

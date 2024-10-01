@@ -8,7 +8,6 @@ const token = Cookies.get('token')
 const headers = {
   headers: {
     'x-token': token,
-    'ngrok-skip-browser-warning': 'true'
   },
 }
 
@@ -51,4 +50,12 @@ export const createNumber = async (information: any) => {
 
 export const sendMessage = async (message: any) => {
   await chatApi.post('/chat/send', message, headers)
+}
+
+export const createTemplate = async ( body: any ) => {
+  return await chatApi.post('/templates/create', body, headers)
+}
+
+export const sendTemplate = async (body: any) => {
+  return await chatApi.post('/templates', body, headers)
 }

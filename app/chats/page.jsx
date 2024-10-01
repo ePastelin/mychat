@@ -8,7 +8,8 @@ import { useState } from 'react'
 import { fetcher } from '@/hooks/api/fetcher'
 import ChatList from '@/components/chat/ChatList'
 import ChatDetails from '@/components/chat/ChatDetails'
-import Template from '@/components/template/Template'
+import Create from '@/components/template/create/Create'
+import SendTemplate from '@/components/template/sendTemplate/SendTemplate'
 import Users from '@/components/users/Users'
 import { useChatInfo } from '@/hooks/chat'
 
@@ -41,7 +42,7 @@ export default function Chats() {
 
         {screen === 1 && (
           <>
-            <div className='md:col-span-3 w-full px-4 bg-white'>
+            <div className='md:col-span-3 w-full h-screen px-4 bg-white flex flex-col'>
               <ChatList chats={chats} setIdChat={setIdChat} />
             </div>
 
@@ -49,8 +50,9 @@ export default function Chats() {
           </>
         )}
 
-        {screen === 2 && <Template />}
+        {screen === 2 && <SendTemplate setScreen={setScreen}/>}
         {screen === 3 && <Users />}
+        {screen === 4 && <Create />}
       </div>
     </>
   )

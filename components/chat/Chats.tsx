@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import formatDate from '@/utils/formatDate'
+import truncateText from '@/utils/truncateText'
 
 function Chat({ children, desktop, name, lastMessage, id, set }: { children: React.ReactNode; desktop?: boolean; name: string, lastMessage: string, id: number, set: any }) {
   return (
@@ -9,7 +10,7 @@ function Chat({ children, desktop, name, lastMessage, id, set }: { children: Rea
           <Image src='/images/profile.jpg' alt='logo' width={200} height={200} className=' rounded-full h-10 w-10' />
           <div>
             <b className='text-sm'>{name}</b>
-            <p className='text-xs'>{lastMessage}</p>
+            <p className='text-xs'>{truncateText(lastMessage, 25)}</p>
           </div>
         </div>
         <div className='flex flex-col items-end'>{children}</div>
