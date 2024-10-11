@@ -1,19 +1,42 @@
 import useSWR from "swr";
 import { fetcher } from "@/hooks/api/fetcher";
-import { useState } from "react";
-import Inputs from "./Inputs"
+import { useEffect, useState } from "react";
+import Inputs from "./Inputs";
 
-export default function Form({name, id}) {
+export default function Form({ name, id }) {
+  const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
-const API = process.env.NEXT_PUBLIC_API_ROUTE
+  // Estado local para manejar los datos de la plantilla actual
+  const [templateData, setTemplateData] = useState(null);
 
-    const { data, error } = useSWR(`${API}/templates/${id}`, fetcher);
-    if (error) return <div>Error al cargar la plantilla</div>;
-    if (!data) return <div>Cargando...</div>;
+  // Usamos SWR para hacer fetch a los datos
+  const { data, error, isValidating } = useSWR(`${API}/templates/${id}`, fetcher, {
+    revalidateOnFocus: false, // Opcional, para evitar refetch en cada enfoque
+  });
 
-      console.log('This is my data:', data, id)
+  // Este useEffect se ejecuta cuando los datos cambian
+  useEffect(() => {
+    if (data && data.length > 0) {
+      // Actualiza el estado solo cuando hay datos válidos
+      setTemplateData(data[0]);
+    } else {
+      // Si no hay datos, resetea el estado
+      setTemplateData(null);
+    }
+  }, [data]);
 
-  return <div className="md:col-span-3">
-   <Inputs templateData={data[0]}/> 
-  </div>;
+  if (error) return <div>Error al cargar la plantilla</div>;
+  if (isValidating) return <div>Cargando...</div>;
+
+  return (
+    <div className="md:col-span-3">
+      {/* Solo renderiza Inputs si hay datos válidos */}
+      {templateData ? (
+        <Inputs templateData={templateData} />
+      ) : (
+        <div>No hay datos de plantilla disponibles.</div>
+      )}
+    </div>
+  );
 }
+

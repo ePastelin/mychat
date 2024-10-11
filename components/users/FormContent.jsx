@@ -163,16 +163,16 @@ export function FormContentCreate ( {setEdit, numbers} ) {
           className="mb-4"
         />
   
-        <TextField
+        {/* <TextField
           id='fullname'
           label='Nombre completo'
           variant='outlined'
           fullWidth
           onChange={e => setEdit(value => ({ ...value, fullname: e.target.value }))}
           className="mb-4"
-        />
+        /> */}
   
-        <TextField
+        {/* <TextField
           id='role_id'
           label='Rol'
           variant='outlined'
@@ -186,7 +186,7 @@ export function FormContentCreate ( {setEdit, numbers} ) {
               {rol.rolName}
             </MenuItem>
           ))}
-        </TextField>
+        </TextField> */}
   
         <TextField
           id='password'

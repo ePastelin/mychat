@@ -20,12 +20,12 @@ export default function Side({ setScreen, screen }) {
         <Option setScreen={setScreen} screen={screen} />
         <div className='h-[1px] w-full bg-black mt-4' />
         <p className=' mt-2 mb-4'>Teléfonos</p>
-        <section>
+        {/* <section>
           <div className='flex flex-col items-center gap-2'>
             <IoPhonePortraitOutline className='text-4xl text-text-50 z-10' />
             <p>9048</p>
           </div>
-        </section>
+        </section> */}
       </section>
       <IoLogOut className='text-4xl text-red-500 z-10 mb-8 hover:cursor-pointer' onClick={handleLogout}/>
     </div>

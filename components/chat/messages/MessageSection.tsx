@@ -1,4 +1,5 @@
 import { Message } from '@/types/common/chat';
+import ShowMessage from './ShowMessage'
 
 export default function MessageSection({ messages, messagesEndRef }: Message) {
 
@@ -15,6 +16,8 @@ export default function MessageSection({ messages, messagesEndRef }: Message) {
     }
   };
 
+  console.log(messages)
+
   return (
     <div className='messageLayout'>
       {messages.map((msg) => (
@@ -23,7 +26,13 @@ export default function MessageSection({ messages, messagesEndRef }: Message) {
             className={`messageBubble ${msg.sender === 1 ? 'bg-blue-500 text-white' : 'bg-senderMessage'}`}
             style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
           >
-            {msg.message}
+            {/* Si existe media, mostrar la imagen */}
+            {msg.media ? (
+              <ShowMessage msg={msg}/>
+            ) : (
+              msg.message
+            )}
+
             <div className="bottom-0 right-0 text-xs text-gray-300 mr-2 flex items-center space-x-1 self-end">
               <span>{new Date(msg.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               {msg.sender === 1 && (
@@ -41,3 +50,4 @@ export default function MessageSection({ messages, messagesEndRef }: Message) {
     </div>
   );
 }
+

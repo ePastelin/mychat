@@ -1,5 +1,5 @@
 import { sendTemplate } from "@/hooks/api/fetcher";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 
 import Preview from "./Preview";
@@ -22,13 +22,24 @@ export default function Inputs({ templateData }) {
   const templateName = templateData.name;
   const languageCode = templateData.language_code;
 
+  useEffect(() => {
+    // Cuando cambie templateData, reseteamos los parámetros del body y header
+    setBodyParams(templateData.body_examples || []);
+    setHeaderParams(templateData.header_examples || []);
+    setIsSuccess(false); // Resetea el estado de éxito al cambiar de plantilla
+  }, [templateData]);
+
   const isFormValid = () => {
     return (
-      toNumber.trim() !== "" &&
-      (!templateData.header_variables || headerParams.length > 0) && // Si hay header, verificar params
-      (!templateData.body_variables || bodyParams.length > 0) && socioName
-    ); // Si hay body, verificar params
+      toNumber.trim() !== "" && // Verifica que el número esté lleno
+      // Si headerParams es un array vacío, pasa por defecto (o si tiene elementos)
+      (headerParams.length === 0 || headerParams.some(param => param.trim() !== "")) &&
+      // Si bodyParams es un array vacío, pasa por defecto (o si tiene elementos)
+      (bodyParams.length === 0 || bodyParams.some(param => param.trim() !== "")) &&
+      socioName.trim() !== "" // Verifica que el nombre del socio esté lleno
+    );
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,22 +158,22 @@ export default function Inputs({ templateData }) {
           </div>
         )}
 
-        {bodyParams.map((param, index) => (
-          <div key={index} className="sendTemplateForm">
-            <label>Parámetro del Body {index + 1}</label>
-            <input
-              type="text"
-              value={param || ""}
-              onChange={(e) => {
-                const newBodyParams = [...bodyParams];
-                newBodyParams[index] = e.target.value;
-                setBodyParams(newBodyParams);
-              }}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
-              placeholder={templateData.body_examples[index] || ""}
-            />
-          </div>
-        ))}
+{bodyParams?.length > 0 && bodyParams.map((param, index) => (
+  <div key={index} className="sendTemplateForm">
+    <label>Parámetro del Body {index + 1}</label>
+    <input
+      type="text"
+      value={param || ""}
+      onChange={(e) => {
+        const newBodyParams = [...bodyParams];
+        newBodyParams[index] = e.target.value;
+        setBodyParams(newBodyParams);
+      }}
+      className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+      placeholder={templateData.body_examples?.[index] || ""}
+    />
+  </div>
+))}
 
         <div className="sendTemplateForm">
           <label>Nombre del Socio</label>

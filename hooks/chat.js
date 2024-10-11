@@ -132,6 +132,20 @@ export const useMessages = (idChat) => {
     }
   };
 
+  const handleSendMultimedia = async (file, mimeType) => {
+    if (file.trim()) {
+      const newMessage = { idChat, file, mimeType };
+
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(newMessage));
+        setMessage('');
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+        }
+      }
+    }
+  }
+
   const adjustTextareaHeight = (textareaRef) => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
@@ -139,5 +153,5 @@ export const useMessages = (idChat) => {
     }
   }
 
-  return { handleSendMessage, adjustTextareaHeight, messages, setMessages, message, setMessage, textareaRef}
+  return { handleSendMessage, adjustTextareaHeight, messages, setMessages, message, setMessage, textareaRef, handleSendMultimedia}
 }

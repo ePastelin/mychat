@@ -25,9 +25,10 @@ export interface InputProps {
   idChat: number
   handleSendMessage: any
   adjustTextareaHeight: any
+  handleSendMultimedia: any 
 }
 
 export interface Message {
-  messages: [{ sender: number; message: string, status: string, date: Date, id: string }]
+  messages: [{ sender: number; message: string, status: string, date: Date, id: string, media: any, type?: Number, fileName?:String, mimeType?: String  }]
   messagesEndRef: any
 }
