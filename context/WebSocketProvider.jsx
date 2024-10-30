@@ -1,21 +1,22 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+const idUser = Cookies.get('idUser')
 
 const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const [incomingMessage, setIncomingMessage] = useState(null);
-    const API = process.env.NEXT_PUBLIC_API_ROUTE
 
     useEffect(() => {
-        // Crear la conexión WebSocket
         const ws = new WebSocket('wss://mychatapi-oxk8.onrender.com/api');
 
         ws.onopen = () => {
             console.log('WebSocket conectado');
             setSocket(ws);
+            ws.send(JSON.stringify({ action: 'register', idUser}))
         };
 
         ws.onmessage = (event) => {
@@ -32,7 +33,6 @@ export const WebSocketProvider = ({ children }) => {
             setSocket(null);
         };
 
-        // Limpiar la conexión al desmontar el componente
         return () => {
             ws.close();
         };

@@ -15,12 +15,16 @@ export const theme = {
       slideDown: {
         '0%': { transform: 'translateY(0)', opacity: 1},
         '100%': { transform: 'translateY(20px)', opacity: 0}
-      }
+      },
+      scaleIn: {
+        '0%': { transform: 'scale(0) translateX(0) translateY(0)', opacity: '0'},
+        '100%': { transform: 'translateX(2rm) translateY(-1rm) scale(1)', opacity: '1'},
+      },
     },
     animation: {
       slideUp: 'slideUp 0.5s ease-out',
-      slideDown: 'slideDown 0.5s ease-out'
-
+      slideDown: 'slideDown 0.5s ease-out',
+      scaleIn: 'scaleIn 0.3s ease-in-out' 
     },
     fontFamily: {
       roboto: ['Roboto', 'sans-serif'],

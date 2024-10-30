@@ -1,12 +1,16 @@
 import { ReadChat, UnreadChat } from '@/components/chat/Chats.tsx'
 import Chat from '@/components/filters/Chat'
 import Search from '@/components/filters/Search'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import chatsFilter from '@/utils/chatsFilter'
 
-export default function ChatList({ chats, setIdChat }) {
+function ChatList({ chats = [], setIdChat }) {
   const [searchName, setSearchName] = useState('')
   const [isUnread, setIsUnread] = useState(0)
+
+  chats.sort((a, b) => {
+    return new Date(b.last_date) - new Date(a.last_date)
+  })
   
   const filteredChats = chatsFilter(chats, searchName, isUnread)
 
@@ -26,3 +30,5 @@ export default function ChatList({ chats, setIdChat }) {
     </>
   )
 }
+
+export default memo(ChatList)

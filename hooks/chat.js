@@ -1,157 +1,176 @@
-'use client'
+"use client";
 
-import { useWebSocket } from '@/context/WebSocketProvider'
-import { useEffect, useRef, useState } from 'react'
+import { useWebSocket } from "@/context/WebSocketProvider";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { sendMultimedia } from "./api/fetcher";
+import { useChatContext } from "@/context/ChatContext";
+import useSound from "use-sound";
+const who = "/audio/who.mp3";
 
-export const useChat = (messages, idChat) => {
+export const useChat = (idChat) => {
+  const { messages } = useChatContext();
 
-  const messagesEndRef = useRef(null)
-  const [first, setFirst] = useState(true)
+  const messagesEndRef = useRef(null);
+  const [first, setFirst] = useState(true);
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: `${first ? 'auto' : 'smooth'}` })
-      setFirst(false)
+      messagesEndRef.current.scrollIntoView({
+        behavior: `${first ? "auto" : "smooth"}`,
+      });
+      setFirst(false);
     }
-  }, [messages, messagesEndRef])
+  }, [messages, messagesEndRef]);
 
   useEffect(() => {
-    setFirst(true)
-  }, [idChat])
-  
-  return { messagesEndRef }
-}
+    setFirst(true);
+  }, [idChat]);
 
-export const useChatInfo = () => {
+  return { messagesEndRef };
+};
+
+export const useChatInfo = (idChat) => {
   const [chats, setChats] = useState([]);
-  const { incomingMessage } = useWebSocket();  // Acceder a incomingMessage del contexto
-  console.log(chats); 
+  const [unreadMessages, setUnreadMessages] = useState();
+  const { incomingMessage } = useWebSocket(); // Acceder a incomingMessage del contexto
+  const [play] = useSound(who);
 
   useEffect(() => {
-    // console.log('entro a este useEffect', incomingMessage);
-    
-    if(incomingMessage) {
-if (incomingMessage.message) {
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === incomingMessage.idChat
-            ? { ...chat, last_message: incomingMessage.message, unread: incomingMessage.sender === 0 ? chat.unread + 1 : chat.unread, last_date: Date.now()}
-            : chat
-        )
-      );
+    const totalUnread = chats.reduce((prev, current) => {
+      console.log(current.unread, "current");
+      return prev + current.unread;
+    }, 0);
+    setUnreadMessages(totalUnread);
+  }, [chats]);
+
+  useEffect(() => {
+    if (incomingMessage) {
+      if (idChat != incomingMessage.idChat) play();
+      if (incomingMessage.message || incomingMessage.media) {
+        const message = incomingMessage.media
+          ? "Multimedia 📁"
+          : incomingMessage.message;
+        setChats((prevChats) =>
+          prevChats.map((chat) =>
+            chat.id === incomingMessage.idChat
+              ? {
+                  ...chat,
+                  last_message: message,
+                  unread:
+                    incomingMessage.sender === 0 &&
+                    incomingMessage.idChat !== idChat
+                      ? chat.unread + 1
+                      : chat.unread,
+                  last_date: Date.now(),
+                }
+              : chat
+          )
+        );
+      }
+      if (incomingMessage.action === "message_read") {
+        setChats((prevChats) =>
+          prevChats.map((chat) =>
+            chat.id === incomingMessage.idChat ? { ...chat, unread: 0 } : chat
+          )
+        );
+      }
     }
-    if(incomingMessage.action === 'message_read') {
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === incomingMessage.idChat
-            ? { ...chat, unread: 0}
-            : chat
-        )
-      );
-    }
-    }
-    
   }, [incomingMessage]);
 
-  return { chats, setChats };
+  return { chats, setChats, unreadMessages };
 };
 
 export const useMessages = (idChat) => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-  const { incomingMessage, socket } = useWebSocket();  // Acceder a incomingMessage del contexto
+  const [message, setMessage] = useState("");
+  const { messages, setMessages } = useChatContext();
+  const { incomingMessage, socket } = useWebSocket();
   const messagesRef = useRef(messages);
   const textareaRef = useRef(null);
 
-
+  useEffect(() => {
+    messagesRef.current = messages[idChat];
+  }, [messages, idChat]);
 
   useEffect(() => {
-    messagesRef.current = messages;
-  }, [messages]);
-
-  // Manejo de mensajes entrantes desde WebSocket
-  useEffect(() => {
-    console.log(incomingMessage)
-    if (incomingMessage && incomingMessage.idChat === idChat ) {
-
-      if (incomingMessage.idChat && incomingMessage.action !== 'message_read') {
-        setMessages((prevMessages) => [...prevMessages, incomingMessage]);
+    if (incomingMessage && Number(incomingMessage.idChat) === idChat) {
+      if (incomingMessage.idChat && incomingMessage.action !== "message_read") {
+        console.log("incoming document", incomingMessage);
+        setMessages((prevMessages) => ({
+          ...prevMessages,
+          [idChat]: [...(prevMessages[idChat] || []), incomingMessage],
+        }));
       }
     }
   }, [incomingMessage]);
 
   useEffect(() => {
-    if (incomingMessage && incomingMessage.status ) {
-
-      console.log(incomingMessage, "Aquí donde se cambia el esado", messages)
-
-        setMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.id === incomingMessage.idMessage || msg.idMessage === incomingMessage.idMessage
-              ? { ...msg, status: incomingMessage.status }
-              : msg
-          )
-        );
-      
+    if (incomingMessage && incomingMessage.status) {
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [idChat]: prevMessages[idChat].map((msg) =>
+          msg.id === incomingMessage.idMessage ||
+          msg.idMessage === incomingMessage.idMessage
+            ? { ...msg, status: incomingMessage.status }
+            : msg
+        ),
+      }));
     }
   }, [incomingMessage]);
 
-  // Enviar mensajes de lectura cuando idChat coincide
   useEffect(() => {
-
-    console.log('Estoy entrando a enviar la lectura', idChat)
     if (idChat && socket) {
-      const unreadMessages = messages.filter(
-        (message) => message.sender === 0 && message.status === 'sent' && idChat === message.idChat 
+      const unreadMessages = (messages[idChat] || []).filter(
+        (message) =>
+          message.sender === 0 &&
+          message.status === "sent" &&
+          idChat === message.idChat
       );
 
-      console.log(unreadMessages, 'Acá los mensajes sin leer')
-
       unreadMessages.forEach((msg) => {
-        socket.send(JSON.stringify({
-          action: 'message_read',
-          idMessage: msg.id,
-          idChat: idChat
-        }));
+        socket.send(
+          JSON.stringify({
+            action: "message_read",
+            idMessage: msg.id,
+            idChat: idChat,
+          })
+        );
       });
     }
-  }, [idChat, messages]);
+  }, [idChat, messages[idChat], socket]);
 
-  // Manejar el envío de mensajes
-  const handleSendMessage = async () => {
-    if (message.trim()) {
-      const newMessage = { message, idChat };
-
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(newMessage));
-        setMessage('');
-        if (textareaRef.current) {
-          textareaRef.current.style.height = 'auto';
-        }
+  const handleSendMessage = useCallback(() => {
+    if (message.trim() && socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({ message, idChat }));
+      setMessage("");
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
       }
     }
+  }, [message, idChat, socket]);
+
+  const handleSendMultimedia = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("idChat", idChat);
+
+    await sendMultimedia(formData);
   };
-
-  const handleSendMultimedia = async (file, mimeType) => {
-    if (file.trim()) {
-      const newMessage = { idChat, file, mimeType };
-
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(newMessage));
-        setMessage('');
-        if (textareaRef.current) {
-          textareaRef.current.style.height = 'auto';
-        }
-      }
-    }
-  }
 
   const adjustTextareaHeight = (textareaRef) => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }
+  };
 
-  return { handleSendMessage, adjustTextareaHeight, messages, setMessages, message, setMessage, textareaRef, handleSendMultimedia}
-}
+  return {
+    handleSendMessage,
+    adjustTextareaHeight,
+    messages: messages[idChat] || [],
+    setMessages,
+    message,
+    setMessage,
+    textareaRef,
+    handleSendMultimedia,
+  };
+};

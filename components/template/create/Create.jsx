@@ -6,9 +6,10 @@ import ButtonsSection from "./ButtonsSection";
 import Preview from "./Preview";
 import useTemplate from "@/hooks/useTemplate";
 import SelectOptions from "./SelectOptions";
-import { AiOutlineLoading } from "react-icons/ai"; // Asegúrate de tener el icono instalado
+import { AiOutlineLoading } from "react-icons/ai"; 
+import { ButtonNav } from "@/components/common/Button";
 
-export default function Create() {
+export default function Create({ setScreen }) {
   const {
     templateName,
     setTemplateName,
@@ -16,31 +17,32 @@ export default function Create() {
     setCategory,
     handleSendTemplate,
     sent,
-    isLoading,     // Agregar el estado de carga
-    isSuccess,     // Agregar el estado de éxito
+    isLoading, 
+    isSuccess, 
     headerProps,
     bodyProps,
     footerProps,
     buttonsProps,
-    language, 
-    category
+    language,
+    category,
   } = useTemplate();
 
-  // Validar si todos los campos necesarios están completos
   const isFormValid = () => {
     return (
       templateName.trim() !== "" &&
       bodyProps.bodyText.trim() !== "" &&
       headerProps.headerText.trim() !== "" &&
-      // Verifica que el idioma y categoría estén seleccionados
       language &&
-      category 
+      category
     );
   };
 
   return (
     <>
       <div className="md:col-span-7 pl-4 content-center">
+        <ButtonNav setScreen={setScreen} screen={2}>
+          Regresar
+        </ButtonNav>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 gap-y-10">
           <HeaderSection {...headerProps} />
           <BodySection {...bodyProps} />
@@ -78,10 +80,10 @@ export default function Create() {
               isLoading
                 ? "bg-gray-400 cursor-not-allowed"
                 : isSuccess
-                ? "bg-green-500 hover:bg-green-600"
-                : !isFormValid()
-                ? "bg-blue-500 opacity-50 cursor-not-allowed"
-                : "bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
+                  ? "bg-green-500 hover:bg-green-600"
+                  : !isFormValid()
+                    ? "bg-blue-500 opacity-50 cursor-not-allowed"
+                    : "bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
             }
           `}
           onClick={handleSendTemplate}
@@ -99,4 +101,3 @@ export default function Create() {
     </>
   );
 }
-

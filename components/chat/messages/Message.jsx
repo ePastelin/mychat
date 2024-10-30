@@ -6,12 +6,16 @@ import { fetcher } from '@/hooks/api/fetcher';
 const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
 export default function Message({ idChat, chat }) {
-  const { messages, setMessages, message, setMessage, handleSendMessage, adjustTextareaHeight, textareaRef, handleSendMultimedia} = useMessages(idChat);
-  const { messagesEndRef } = useChat(messages, idChat);
+  const { message, setMessage, handleSendMessage, adjustTextareaHeight, textareaRef, handleSendMultimedia, setFile, messages, setMessages} = useMessages(idChat);
+  const { messagesEndRef } = useChat(messages || [], idChat);
 
   const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
     onSuccess: (fetchedMessages) => {
-      setMessages(fetchedMessages);
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [idChat]: fetchedMessages
+      }))
+      console.log(messages, 'Estoy en el fetching')
     }
   });
 
@@ -23,8 +27,16 @@ export default function Message({ idChat, chat }) {
   return (
     <div className="h-screen md:col-span-8 w-full flex flex-col">
       <Profile name={socio_name} />
-      <MessageSection messages={messages} messagesEndRef={messagesEndRef} />
-      <Input idChat={idChat} message={message} setMessage={setMessage} handleSendMessage={handleSendMessage} adjustTextareaHeight={adjustTextareaHeight} textareaRef={textareaRef} handleSendMultimedia={handleSendMultimedia}/>
+      <MessageSection messages={messages || []} messagesEndRef={messagesEndRef} />
+      <Input 
+      idChat={idChat} 
+      message={message} 
+      setMessage={setMessage} 
+      handleSendMessage={handleSendMessage} 
+      adjustTextareaHeight={adjustTextareaHeight} 
+      textareaRef={textareaRef} 
+      handleSendMultimedia={handleSendMultimedia} 
+      setFile={setFile}/>
     </div>
   );
 }

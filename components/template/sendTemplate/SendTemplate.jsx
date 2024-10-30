@@ -6,12 +6,17 @@ import Form from "./form/Form";
 import Cards from "./list/Cards";
 import useSWR from "swr";
 import Select from "react-select";
+import Cookies from "js-cookie";
 import { formatName } from "@/utils/nameFormat";
 import { Autocomplete, TextField } from "@mui/material";
+import { useChatContext } from "@/context/ChatContext";
+import { ButtonNav } from "@/components/common/Button";
 
 export default function SendTemplate({ setScreen }) {
   const API = process.env.NEXT_PUBLIC_API_ROUTE;
-  const [templates, setTemplates] = useState([]);
+  const role = Cookies.get("role");
+  console.log(role, 'This is the role')
+  const { templates, setTemplates } = useChatContext();
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [languages, setLanguages] = useState();
@@ -77,12 +82,11 @@ export default function SendTemplate({ setScreen }) {
         </div>
         {/* Select para filtrar por status */}
 
-        <button
-          onClick={() => setScreen(4)}
-          className=" bg-blue-500 text-white rounded-md p-1 mb-4 text-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
-        >
-          Crear Plantilla
-        </button>
+        {role == 1 && (
+          <ButtonNav setScreen={setScreen} screen={4}>
+            Crear Template
+          </ButtonNav>
+        )}
 
         {/* Pasar los filtros al componente Cards */}
         <Cards

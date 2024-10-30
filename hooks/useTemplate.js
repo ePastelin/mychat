@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import createTemplateFormater from '@/utils/createTemplateFormater'
-import chatApi from '@/api/api'
 import { createTemplate } from './api/fetcher'
 
 export default function useTemplate() {

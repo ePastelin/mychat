@@ -19,7 +19,6 @@ export default function ShowMessage ({ msg }) {
     const url = URL.createObjectURL(blob);
     setMediaSrc(url);
 
-    // Cleanup URL object when component unmounts
     return () => URL.revokeObjectURL(url);
   }, [msg.media.data]);
 

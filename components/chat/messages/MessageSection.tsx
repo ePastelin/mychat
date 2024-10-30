@@ -1,7 +1,8 @@
 import { Message } from '@/types/common/chat';
 import ShowMessage from './ShowMessage'
+import { memo } from 'react';
 
-export default function MessageSection({ messages, messagesEndRef }: Message) {
+function MessageSection({ messages, messagesEndRef }: Message) {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -15,8 +16,6 @@ export default function MessageSection({ messages, messagesEndRef }: Message) {
         return '';
     }
   };
-
-  console.log(messages)
 
   return (
     <div className='messageLayout'>
@@ -51,3 +50,4 @@ export default function MessageSection({ messages, messagesEndRef }: Message) {
   );
 }
 
+export default memo(MessageSection) 

@@ -26,6 +26,7 @@ export interface InputProps {
   handleSendMessage: any
   adjustTextareaHeight: any
   handleSendMultimedia: any 
+  setFile: any
 }
 
 export interface Message {
