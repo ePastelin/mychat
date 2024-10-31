@@ -1,5 +1,5 @@
 import Card from './Card'
-import templateFilter from '@/utils/TemplateFilter'
+import templateFilter from '@/utils/templateFilter'
 
 export default function Cards ({ templates, setId, setName, selectedStatus, selectedLanguage, selectedCategory, searchName }) {
 

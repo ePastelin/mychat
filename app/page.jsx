@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Form from '@/components/auth/Form'
-import authenticateRouteLogin from '@/components/auth/authenticateRouteLogin'
+import AuthenticateRouteLogin from '@/components/auth/AuthenticateRouteLogin'
 
 function Home() {
   return (
@@ -15,6 +15,6 @@ function Home() {
   )
 }
 
-export default authenticateRouteLogin(Home, {
+export default AuthenticateRouteLogin(Home, {
   path: '/chats',
 })
