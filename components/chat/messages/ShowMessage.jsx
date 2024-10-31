@@ -1,29 +1,34 @@
-import { useEffect, useState } from 'react';
-import ShowDocument from './ShowDocument'
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import ShowDocument from "./ShowDocument";
+import Image from "next/image";
 
-export default function ShowMessage ({ msg }) {
-  const [mediaSrc, setMediaSrc] = useState('');
+export default function ShowMessage({ msg }) {
+  const [mediaSrc, setMediaSrc] = useState("");
 
   useEffect(() => {
-    let byteArray;
-    if (Array.isArray(msg.media.data)) {
-      byteArray = new Uint8Array(msg.media.data);
-    } else if (msg.media.data instanceof Buffer) {
-      byteArray = new Uint8Array(msg.media.data);
-    } else {
-      console.error('Tipo de dato no soportado para msg.media.data');
-      return;
+    if (msg.media) {
+      const url = `${API_BASE_URL}/multimedia/${msg.media}`;
+      setMediaSrc(url);
     }
+  }, [msg.media]);
 
-    const blob = new Blob([byteArray], { type: msg.mimeType });
-    const url = URL.createObjectURL(blob);
-    setMediaSrc(url);
+  if (msg.type === 1)
+    return (
+      <Image
+        src={mediaSrc}
+        alt="Media"
+        className="max-w-xs"
+        width={500}
+        height={400}
+      />
+    );
 
-    return () => URL.revokeObjectURL(url);
-  }, [msg.media.data]);
-
-  if (msg.type === 1) return <Image src={mediaSrc} alt="Media" className="max-w-xs" width={500} height={400}/>
-  
-  if (msg.type === 5) return <ShowDocument filename={msg.filename} mimeType={msg.mimeType} mediaSrc={mediaSrc}/> 
-};
+  if (msg.type === 5)
+    return (
+      <ShowDocument
+        filename={msg.filename}
+        mimeType={msg.mimeType}
+        mediaSrc={mediaSrc}
+      />
+    );
+}
