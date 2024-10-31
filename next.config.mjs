@@ -9,7 +9,7 @@ const nextConfig = {
     images: {
         domains: ['mychatapi-oxk8.onrender.com']
     },
-    webpack(config, options) {
+    webpack(config) {
         config.module.rules.push({
             test: /\.mp3$/,
             use: {
