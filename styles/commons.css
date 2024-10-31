@@ -9,3 +9,7 @@
 .button-nav {
     @apply bg-blue-500 text-white rounded-md p-1 mb-4 text-sm transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300
 }
+
+.loading {
+    @apply inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 
+}

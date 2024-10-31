@@ -12,6 +12,7 @@ import Create from "@/components/template/create/Create";
 import SendTemplate from "@/components/template/sendTemplate/SendTemplate";
 import Users from "@/components/users/Users";
 import { useChatInfo } from "@/hooks/chat";
+import Loader from "@/components/common/Loader";
 
 const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
@@ -19,11 +20,14 @@ export default function Chats() {
   const [screen, setScreen] = useState(1);
   const [idChat, setIdChat] = useState(null);
   const { chats, setChats, unreadMessages } = useChatInfo(idChat);
-  useSWR(`${API}/chat`, fetcher, {
+  const {data, error} = useSWR(`${API}/chat`, fetcher, {
     onSuccess: (data) => {
       setChats(data?.chats || []);
     },
   });
+  
+  if (error) return <div>Failed to load</div>;
+  if(!data) return <Loader/>
 
   return (
     <>

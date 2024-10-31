@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chats/[id]/page.jsx", "app/chats/page.jsx", "components/common/side/Options.jsx", "components/common/footer/PhoneSelector.jsx", "components/common/side/Side.jsx", "components/template/Template.jsx", "components/users/Users.jsx", "app/page.jsx", "app/chats/layout.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chats/[id]/page.jsx", "app/chats/page.jsx", "components/common/side/Options.jsx", "components/common/footer/PhoneSelector.jsx", "components/common/side/Side.jsx", "components/template/Template.jsx", "components/users/Users.jsx", "app/page.jsx", "app/chats/layout.jsx", "components/filters/Search.jsx"],
   "exclude": ["node_modules"]
 }

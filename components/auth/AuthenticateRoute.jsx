@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "../../hooks/auth/useAuth";
+import Loader from "../common/Loader";
 
 const AuthenticateRoute = (Component = null, options = {}) => {
   return (props) => {
@@ -21,7 +22,7 @@ const AuthenticateRoute = (Component = null, options = {}) => {
     }, [isLogged, router, options.pathAfterFailure]);
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loader />;
     }
 
     return <Component {...props} />;
