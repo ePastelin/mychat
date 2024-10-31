@@ -5,13 +5,11 @@ export default function Option({
   text,
   selected,
   onClick,
-  unreadMessages
 }: {
   children: React.ReactNode
   text: string
   selected?: boolean
   onClick: () => void
-  unreadMessages: number
 }) {
   return (
     <div className='flex flex-col items-center justify-center gap-1 hover:cursor-pointer hover:bg-blue-100 delay-100 rounded-2xl h-[70px] w-20 transition ease-in-out' onClick={onClick}>

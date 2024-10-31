@@ -10,14 +10,16 @@ const nextConfig = {
         domains: ['mychatapi-oxk8.onrender.com']
     },
     webpack(config) {
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            '@': path.resolve(__dirname, './'),
+        };
         config.module.rules.push({
             test: /\.mp3$/,
             use: {
                 loader: 'file-loader',
             }
         })
-
-        config.resolve.alias['@'] = path.resolve(__dirname);
 
         return config
     }
