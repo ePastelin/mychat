@@ -2,7 +2,7 @@ import { Message } from '@/types/common/chat';
 import ShowMessage from './ShowMessage'
 import { memo } from 'react';
 
-function MessageSection({ messages, messagesEndRef }: Message) {
+function MessageSection({ messages, lastMessageRef }: Message) {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -13,19 +13,18 @@ function MessageSection({ messages, messagesEndRef }: Message) {
       case 'read':
         return '✓✓'; // Cambia el color a azul
       default:
-        return '';
+        return 'ⓘ El chat ha expirado | Si deseas continuar vuelve a enviar una plantilla :D';
     }
   };
 
   return (
     <div className='messageLayout'>
-      {messages.map((msg) => (
-        <div key={msg.id} className={`flex ${msg.sender === 1 ? 'justify-end' : 'justify-start'} mb-2`}>
+      {messages.map((msg, index) => (
+        <div key={msg.id} className={`flex ${msg.sender === 1 ? 'justify-end' : 'justify-start'} mb-2`} ref={index === messages.length - 1 ? lastMessageRef : null}> 
           <div
             className={`messageBubble ${msg.sender === 1 ? 'bg-blue-500 text-white' : 'bg-senderMessage'}`}
             style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
           >
-            {/* Si existe media, mostrar la imagen */}
             {msg.media ? (
               <ShowMessage msg={msg}/>
             ) : (
@@ -45,7 +44,7 @@ function MessageSection({ messages, messagesEndRef }: Message) {
           </div>
         </div>
       ))}
-      <div ref={messagesEndRef} />
+      <div/>
     </div>
   );
 }

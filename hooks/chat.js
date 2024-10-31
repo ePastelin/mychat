@@ -45,7 +45,8 @@ export const useChatInfo = (idChat) => {
 
   useEffect(() => {
     if (incomingMessage) {
-      if (idChat != incomingMessage.idChat) play();
+      console.log(incomingMessage, "this is current")
+      if (idChat != incomingMessage.idChat && incomingMessage.idChat) play();
       if (incomingMessage.message || incomingMessage.media) {
         const message = incomingMessage.media
           ? "Multimedia 📁"
@@ -87,9 +88,16 @@ export const useMessages = (idChat) => {
   const messagesRef = useRef(messages);
   const textareaRef = useRef(null);
 
+  const lastMessageRef = useRef(null);
+  const isFirstLoad = useRef(true);
+
   useEffect(() => {
     messagesRef.current = messages[idChat];
   }, [messages, idChat]);
+
+  useEffect(() => {
+    isFirstLoad.current = true;
+  }, [idChat]);
 
   useEffect(() => {
     if (incomingMessage && Number(incomingMessage.idChat) === idChat) {
@@ -163,6 +171,15 @@ export const useMessages = (idChat) => {
     }
   };
 
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({
+        behavior: isFirstLoad.current ? "auto" : "smooth",
+      });
+      isFirstLoad.current = false;
+    }
+  }, [messages[idChat], idChat]);
+
   return {
     handleSendMessage,
     adjustTextareaHeight,
@@ -172,5 +189,6 @@ export const useMessages = (idChat) => {
     setMessage,
     textareaRef,
     handleSendMultimedia,
+    lastMessageRef,
   };
 };

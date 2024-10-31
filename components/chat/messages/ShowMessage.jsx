@@ -6,8 +6,9 @@ export default function ShowMessage({ msg }) {
   const [mediaSrc, setMediaSrc] = useState("");
 
   useEffect(() => {
+    const API = process.env.NEXT_PUBLIC_ROUTE
     if (msg.media) {
-      const url = `${API_BASE_URL}/multimedia/${msg.media}`;
+      const url = `${API}${msg.media}`;
       setMediaSrc(url);
     }
   }, [msg.media]);

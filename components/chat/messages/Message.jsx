@@ -17,6 +17,7 @@ export default function Message({ idChat, chat }) {
     setFile,
     messages,
     setMessages,
+    lastMessageRef,
   } = useMessages(idChat);
   const { messagesEndRef } = useChat(messages || [], idChat);
 
@@ -43,7 +44,7 @@ export default function Message({ idChat, chat }) {
       ) : (
         <MessageSection
           messages={messages || []}
-          messagesEndRef={messagesEndRef}
+          lastMessageRef={lastMessageRef}
         />
       )}
 

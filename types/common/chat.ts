@@ -32,4 +32,5 @@ export interface InputProps {
 export interface Message {
   messages: [{ sender: number; message: string, status: string, date: Date, id: string, media: any, type?: Number, fileName?:String, mimeType?: String  }]
   messagesEndRef: any
+  lastMessageRef: any 
 }
