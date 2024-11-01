@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "../../hooks/auth/useAuth";
-import Loader from "../common/Loader";
+import CircleLoader from "../common/Loader";
 
 const AuthenticateRoute = (Component = null, options = {}) => {
   return (props) => {
@@ -22,7 +22,7 @@ const AuthenticateRoute = (Component = null, options = {}) => {
     }, [isLogged, router, options.pathAfterFailure]);
 
     if (loading) {
-      return <Loader />;
+      return <CircleLoader />;
     }
 
     return <Component {...props} />;

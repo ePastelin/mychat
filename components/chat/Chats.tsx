@@ -26,7 +26,7 @@ function Chat({
           <ProfilePhoto name={name} />
           <div>
             <b className="text-sm">{name}</b>
-            <p className="text-xs">{truncateText(lastMessage, 25)}</p>
+            <p className="text-xs">{truncateText(lastMessage, 27)}</p>
           </div>
         </div>
         <div className="flex flex-col items-end">{children}</div>

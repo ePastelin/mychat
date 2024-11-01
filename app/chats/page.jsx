@@ -12,7 +12,7 @@ import Create from "@/components/template/create/Create";
 import SendTemplate from "@/components/template/sendTemplate/SendTemplate";
 import Users from "@/components/users/Users";
 import { useChatInfo } from "@/hooks/chat";
-import Loader from "@/components/common/Loader";
+import CircleLoader from "@/components/common/Loader";
 
 const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
@@ -27,7 +27,7 @@ export default function Chats() {
   });
   
   if (error) return <div>Failed to load</div>;
-  if(!data) return <Loader/>
+  if(!data) return <CircleLoader/>
 
   return (
     <>

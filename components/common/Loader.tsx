@@ -1,4 +1,4 @@
-export default function Loader({ withSize = "w-screen" }) {
+export default function CircleLoader({ withSize = "w-screen" }) {
   return (
     <div
       role="status"

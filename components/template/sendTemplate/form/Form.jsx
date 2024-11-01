@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { fetcher } from "@/hooks/api/fetcher";
 import { useEffect, useState } from "react";
 import Inputs from "./Inputs";
+import CircleLoader from "@/components/common/Loader";
 
 export default function Form({ name, id }) {
   const API = process.env.NEXT_PUBLIC_API_ROUTE;
@@ -10,9 +11,13 @@ export default function Form({ name, id }) {
   const [templateData, setTemplateData] = useState(null);
 
   // Usamos SWR para hacer fetch a los datos
-  const { data, error, isValidating } = useSWR(`${API}/templates/${id}`, fetcher, {
-    revalidateOnFocus: false, // Opcional, para evitar refetch en cada enfoque
-  });
+  const { data, error, isValidating } = useSWR(
+    `${API}/templates/${id}`,
+    fetcher,
+    {
+      revalidateOnFocus: false, // Opcional, para evitar refetch en cada enfoque
+    }
+  );
 
   // Este useEffect se ejecuta cuando los datos cambian
   useEffect(() => {
@@ -26,7 +31,7 @@ export default function Form({ name, id }) {
   }, [data]);
 
   if (error) return <div>Error al cargar la plantilla</div>;
-  if (isValidating) return <div>Cargando...</div>;
+  if (isValidating) return <CircleLoader withSize="w-[25vw]"/>;
 
   return (
     <div className="md:col-span-3">
@@ -39,4 +44,3 @@ export default function Form({ name, id }) {
     </div>
   );
 }
-

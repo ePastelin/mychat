@@ -2,7 +2,7 @@ import { Profile, MessageSection, Input } from "./index";
 import useSWR from "swr";
 import { useChat, useMessages } from "@/hooks/chat.js";
 import { fetcher } from "@/hooks/api/fetcher";
-import Loader from "@/components/common/Loader";
+import CircleLoader from "@/components/common/Loader";
 
 const API = process.env.NEXT_PUBLIC_API_ROUTE;
 
@@ -39,7 +39,7 @@ export default function Message({ idChat, chat }) {
       <Profile name={socio_name} />
       {!data ? (
         <div className="messageLayout">
-          <Loader withSize="w-full" />
+          <CircleLoader withSize="w-full" />
         </div>
       ) : (
         <MessageSection
