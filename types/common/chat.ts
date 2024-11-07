@@ -27,6 +27,7 @@ export interface InputProps {
   adjustTextareaHeight: any
   handleSendMultimedia: any 
   setFile: any
+  isActive: boolean
 }
 
 export interface Message {

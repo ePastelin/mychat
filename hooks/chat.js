@@ -46,6 +46,9 @@ export const useChatInfo = (idChat) => {
   useEffect(() => {
     if (incomingMessage) {
       console.log(incomingMessage, "this is current")
+      if (incomingMessage.isActive === 0) {
+        
+      }
       if (idChat != incomingMessage.idChat && incomingMessage.idChat) play();
       if (incomingMessage.message || incomingMessage.media) {
         const message = incomingMessage.media
@@ -63,6 +66,7 @@ export const useChatInfo = (idChat) => {
                       ? chat.unread + 1
                       : chat.unread,
                   last_date: Date.now(),
+                  isActive: incomingMessage.isActive === 0 && 0
                 }
               : chat
           )

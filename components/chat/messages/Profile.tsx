@@ -1,10 +1,15 @@
-import ProfilePhoto from '@/components/common/ProfilePhoto'
+import ProfilePhoto from "@/components/common/ProfilePhoto";
 
-export default function Profile({name}: {name: string}) {
+interface Props {
+  name: string;
+  isActive: boolean;
+}
+
+export default function Profile({ name, isActive }: Props) {
   return (
-    <div className='profilebg'>
-      <ProfilePhoto name={name} />
-      <span className='font-semibold ml-4'>{name}</span>
+    <div className="profilebg">
+      <ProfilePhoto name={name} isActive={isActive} />
+      <span className="font-semibold ml-4">{name}</span>
     </div>
-  )
+  );
 }

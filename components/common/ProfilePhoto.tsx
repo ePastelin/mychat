@@ -1,11 +1,16 @@
-export default function ProfilePhoto({ name }: { name: String }) {
+interface Props {
+  name: string,
+  isActive: boolean
+}
+
+export default function ProfilePhoto({ name, isActive = true }: Props) {
 
     const randomColor = getRandomColor(name)
 
   return (
     <div
       className="rounded-full h-10 w-10 flex items-center justify-center text-white"
-      style={{ backgroundColor: randomColor }}
+      style={{ backgroundColor: isActive ? randomColor : '#bfc2c6' }}
     >
       {getInitials(name)}
     </div>

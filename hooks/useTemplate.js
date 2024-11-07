@@ -1,54 +1,59 @@
-import { useState } from 'react'
-import createTemplateFormater from '@/utils/createTemplateFormater'
-import { createTemplate } from './api/fetcher'
+import { useState } from "react";
+import createTemplateFormater from "@/utils/createTemplateFormater";
+import { createTemplate } from "./api/fetcher";
 
 export default function useTemplate() {
-  const [templateName, setTemplateName] = useState('')
-  const [headerText, setHeaderText] = useState('')
-  const [bodyText, setBodyText] = useState()
-  const [footerText, setFooterText] = useState('')
-  const [headerExamples, setHeaderExamples] = useState({})
-  const [bodyExamples, setBodyExamples] = useState({})
-  const [footerExamples, setFooterExamples] = useState({})
-  const [buttons, setButtons] = useState([])
-  const [language, setLanguage] = useState('')
-  const [category, setCategory] = useState('')
-  const [sent, setSent] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [templateName, setTemplateName] = useState("");
+  const [headerText, setHeaderText] = useState("");
+  const [bodyText, setBodyText] = useState();
+  const [footerText, setFooterText] = useState("");
+  const [headerExamples, setHeaderExamples] = useState({});
+  const [bodyExamples, setBodyExamples] = useState({});
+  const [footerExamples, setFooterExamples] = useState({});
+  const [buttons, setButtons] = useState([
+    {
+      type: "QUICK_REPLY",
+      text: "Desuscribirse",
+    },
+  ]);
+  const [language, setLanguage] = useState("");
+  const [category, setCategory] = useState("");
+  const [sent, setSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleAddVariable = (setTextFunc, text, setExamplesFunc, examples) => {
-    const newIndex = Object.keys(examples).length + 1
-    setTextFunc(`${text} {{${newIndex}}}`)
-    setExamplesFunc({ ...examples, [newIndex]: '' })
-  }
+    const newIndex = Object.keys(examples).length + 1;
+    setTextFunc(`${text} {{${newIndex}}}`);
+    setExamplesFunc({ ...examples, [newIndex]: "" });
+  };
 
   const handleRemoveVariable = (setTextFunc, text, setExamplesFunc, examples, indexToRemove) => {
-    const newExamples = { ...examples }
-    delete newExamples[indexToRemove]
-    setExamplesFunc(newExamples)
+    const newExamples = { ...examples };
+    delete newExamples[indexToRemove];
+    setExamplesFunc(newExamples);
 
-    const newText = text.replace(` {{${indexToRemove}}}`, '')
-    setTextFunc(newText)
-  }
+    const newText = text.replace(` {{${indexToRemove}}}`, "");
+    setTextFunc(newText);
+  };
 
   const handleExampleChange = (index, value, setExamplesFunc, examples) => {
-    setExamplesFunc({ ...examples, [index]: value })
-  }
+    setExamplesFunc({ ...examples, [index]: value });
+  };
 
   const handleAddButton = () => {
-    setButtons([...buttons, { type: '', text: '', phoneNumber: '', url: '' }])
-  }
+    setButtons([...buttons, { type: "", text: "", phoneNumber: "", url: "" }]);
+  };
 
   const handleButtonChange = (index, field, value) => {
-    const newButtons = [...buttons]
-    newButtons[index][field] = value
-    setButtons(newButtons)
-  }
+    const newButtons = [...buttons];
+    newButtons[index][field] = value;
+    setButtons(newButtons);
+  };
 
   const removeButton = (index) => {
-    setButtons(buttons.filter((_, i) => i !== index))
-  }
+    setButtons(buttons.filter((_, i) => i !== index));
+  };
 
   const handleSendTemplate = async () => {
     setIsLoading(true);
@@ -60,28 +65,28 @@ export default function useTemplate() {
       category,
       headerProps: {
         headerText,
-        headerExamples
+        headerExamples,
       },
       bodyProps: {
         bodyText,
-        bodyExamples
+        bodyExamples,
       },
       footerProps: {
         footerText,
-        footerExamples
+        footerExamples,
       },
       buttonsProps: {
-        buttons
-      }
+        buttons,
+      },
     });
 
-    console.log(body)
-    const response = await createTemplate(body) 
+    console.log(body);
+    const response = await createTemplate(body);
     setIsLoading(false);
     setIsSuccess(true);
-    console.log(response)
+    console.log(response);
     setSent(true);
-  }
+  };
 
   return {
     templateName,
@@ -127,5 +132,5 @@ export default function useTemplate() {
       handleButtonChange,
       removeButton,
     },
-  }
+  };
 }

@@ -1,6 +1,6 @@
 import { Profile, MessageSection, Input } from "./index";
 import useSWR from "swr";
-import { useChat, useMessages } from "@/hooks/chat.js";
+import { useMessages } from "@/hooks/chat.js";
 import { fetcher } from "@/hooks/api/fetcher";
 import CircleLoader from "@/components/common/Loader";
 
@@ -19,7 +19,6 @@ export default function Message({ idChat, chat }) {
     setMessages,
     lastMessageRef,
   } = useMessages(idChat);
-  const { messagesEndRef } = useChat(messages || [], idChat);
 
   const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
     onSuccess: (fetchedMessages) => {
@@ -32,20 +31,17 @@ export default function Message({ idChat, chat }) {
 
   if (error) return <div>Failed to load</div>;
 
-  const { socio_name } = chat;
+  const { socio_name, isActive } = chat;
 
   return (
     <div className="h-screen md:col-span-8 w-full flex flex-col">
-      <Profile name={socio_name} />
+      <Profile name={socio_name} isActive={isActive} />
       {!data ? (
         <div className="messageLayout">
           <CircleLoader withSize="w-full" />
         </div>
       ) : (
-        <MessageSection
-          messages={messages || []}
-          lastMessageRef={lastMessageRef}
-        />
+        <MessageSection messages={messages || []} lastMessageRef={lastMessageRef} />
       )}
 
       <Input
@@ -57,6 +53,7 @@ export default function Message({ idChat, chat }) {
         textareaRef={textareaRef}
         handleSendMultimedia={handleSendMultimedia}
         setFile={setFile}
+        isActive={isActive}
       />
     </div>
   );

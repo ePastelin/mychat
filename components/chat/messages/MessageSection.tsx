@@ -11,9 +11,9 @@ function MessageSection({ messages, lastMessageRef }: Message) {
       case 'delivered':
         return '✓✓';
       case 'read':
-        return '✓✓'; // Cambia el color a azul
+        return '✓✓';
       default:
-        return 'ⓘ El chat ha expirado | Si deseas continuar vuelve a enviar una plantilla :D';
+        return 'ⓘ  El chat ha expirado | Si deseas continuar vuelve a enviar una plantilla';
     }
   };
 

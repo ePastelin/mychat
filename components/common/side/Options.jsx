@@ -29,7 +29,7 @@ export default function Options({ setScreen, screen, unreadMessages }) {
           { unreadMessages ? (<div className="rounded-full bg-notification w-6 h-6 mt-1 text-center text-white text-sm flex items-center justify-center absolute translate-x-8 -translate-y-4 animate-scaleIn">
             {unreadMessages < 99 ? unreadMessages : "+99"}
           </div>): null}
-          <TbMessage2Minus className="text-3xl text-text-100 z-10" />
+          <TbMessage2Minus className="text-3xl text-text-50 z-10" />
         </div>
       ),
       },
@@ -49,7 +49,6 @@ export default function Options({ setScreen, screen, unreadMessages }) {
 
   return (
     <footer className="flex flex-col items-center">
-      <p className="mb-6">Opciones</p>
       <div className="h-auto flex flex-col gap-8">
         {options.map((option) =>
           option.id === "users" && role !== 1 ? null : (

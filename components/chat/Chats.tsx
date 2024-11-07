@@ -8,6 +8,7 @@ function Chat({
   lastMessage,
   id,
   set,
+  isActive,
 }: {
   children: React.ReactNode;
   desktop?: boolean;
@@ -15,6 +16,7 @@ function Chat({
   lastMessage: string;
   id: number;
   set: any;
+  isActive: boolean
 }) {
   return (
     <>
@@ -23,9 +25,12 @@ function Chat({
         onClick={() => set(id)}
       >
         <div className="flex gap-4">
-          <ProfilePhoto name={name} />
+          <ProfilePhoto name={name} isActive={isActive}/>
           <div>
-            <b className="text-sm">{name}</b>
+            <div className="flex gap-2">
+              <b className="text-sm">{name}</b>
+              {!isActive && <p className="text-xs">Desactivado</p>}
+            </div>
             <p className="text-xs">{truncateText(lastMessage, 27)}</p>
           </div>
         </div>
@@ -36,27 +41,11 @@ function Chat({
   );
 }
 
-export function UnreadChat({
-  desktop,
-  chat,
-  set,
-}: {
-  desktop?: boolean;
-  chat: any;
-  set: any;
-}) {
-  const { socio_name, last_message, id, unread } = chat;
+export function UnreadChat({ desktop, chat, set }: { desktop?: boolean; chat: any; set: any }) {
+  const { socio_name, last_message, id, unread, isActive } = chat;
   return (
-    <Chat
-      desktop={desktop}
-      name={socio_name}
-      lastMessage={last_message}
-      id={id}
-      set={set}
-    >
-      <p className="text-sm text-notification">
-        {formatDate(chat.last_date, true)}
-      </p>
+    <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set} isActive={isActive}>
+      <p className="text-sm text-notification">{formatDate(chat.last_date, true)}</p>
       <div className="rounded-full bg-notification w-6 h-6 mt-1 text-center text-white text-sm flex items-center justify-center animate-scaleIn">
         {unread < 100 ? unread : "+99"}
       </div>
@@ -64,29 +53,11 @@ export function UnreadChat({
   );
 }
 
-export function ReadChat({
-  desktop,
-  chat,
-  set,
-}: {
-  desktop?: boolean;
-  chat: any;
-  set: any;
-}) {
-  const { socio_name, last_message, id } = chat;
+export function ReadChat({ desktop, chat, set }: { desktop?: boolean; chat: any; set: any }) {
+  const { socio_name, last_message, id, isActive } = chat;
   return (
-    <Chat
-      desktop={desktop}
-      name={socio_name}
-      lastMessage={last_message}
-      id={id}
-      set={set}
-    >
-      <p className=" text-sm text-text-50">
-        {formatDate(chat.last_date, true)}
-      </p>
+    <Chat desktop={desktop} name={socio_name} lastMessage={last_message} id={id} set={set} isActive={isActive}>
+      <p className=" text-sm text-text-50">{formatDate(chat.last_date, true)}</p>
     </Chat>
   );
 }
-
-
