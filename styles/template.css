@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 .component {
-    @apply text-base text-text-100
+    @apply text-base text-text-100 h-screen
+}
+
+.section-title {
+@apply text-base text-text-100
 }
 
 .text_area {
@@ -40,15 +44,39 @@
 }
 
 .template_select {
-    @apply rounded-xl  text-sm border animate-slideUp text-icons
+    @apply rounded-xl text-sm border text-icons
 }
 
 .sendTemplateForm {
     @apply mt-6 px-4
 }
 
+.preview__container {
+    @apply h-auto mt-6 py-6 rounded-2xl flex justify-center items-center 
+}
+
+.preview__bubble {
+    @apply w-64 bg-blue-500 h-auto py-5 px-3 rounded-3xl shadow-dropshadow-message
+}
+
+.preview__bubble-text {
+    @apply text-white text-sm mb-4
+}
+
+.preview__bubble-button {
+    @apply mt-2 w-full bg-background text-gray-600 font-medium px-4 py-2 rounded-full text-sm 
+}
+
 .sendTemplateForm label {
     @apply block text-sm text-gray-700
+}
+
+.sendTemplate__list-card {
+    @apply rounded-md h-auto shadow-dropshadow-message flex flex-col gap-2 py-7 px-8 animate-slideUp flex-[1_1_min(300px,_calc(50%-20px))] justify-between
+}
+
+.sendTemplate__list-cards {
+    @apply flex flex-wrap gap-10 overflow-y-auto h-4/5 w-full basis-6 px-8
 }
 
 .remove-button__container {

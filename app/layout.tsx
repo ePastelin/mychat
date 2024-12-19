@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import {WebSocketProvider} from '@/context/WebSocketProvider'
+import { WebSocketProvider } from '@/context/WebSocketProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,10 +15,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <WebSocketProvider>
-          {children}
-        </WebSocketProvider>
-        </body>
+        <WebSocketProvider>{children}</WebSocketProvider>
+      </body>
     </html>
   )
 }

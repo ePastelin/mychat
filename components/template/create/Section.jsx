@@ -10,48 +10,33 @@ function Section({
   allowVariables = true, // Añade la opción por defecto para permitir variables
 }) {
   return (
-    <section className="h-96 relative overflow-y-auto">
-      <h3 className="component">{name}</h3>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="text_area"
-      />
-      
+    <section className='h-96 relative overflow-y-auto'>
+      <h3 className='section-title'>{name}</h3>
+      <textarea value={text} onChange={(e) => setText(e.target.value)} className='text_area' />
+
       {allowVariables && (
         <>
-          <p className="variables">Variables</p>
+          <p className='variables'>Variables</p>
 
           {Object.keys(examples).map((key) => (
-            <div key={key} className="variables_container">
+            <div key={key} className='variables_container'>
               <input
-                type="text"
+                type='text'
                 placeholder={`Ejemplo para variable {{${key}}}`}
                 value={examples[key]}
-                onChange={(e) =>
-                  handleExampleChange(key, e.target.value, setExamples, examples)
-                }
+                onChange={(e) => handleExampleChange(key, e.target.value, setExamples, examples)}
               />
-              <button
-                onClick={() =>
-                  handleRemoveVariable(setText, text, setExamples, examples, key)
-                }
-              >
-                -
-              </button>
+              <button onClick={() => handleRemoveVariable(setText, text, setExamples, examples, key)}>-</button>
             </div>
           ))}
 
-          <button
-            className="add_variable"
-            onClick={() => handleAddVariable(setText, text, setExamples, examples)}
-          >
+          <button className='add_variable' onClick={() => handleAddVariable(setText, text, setExamples, examples)}>
             +
           </button>
         </>
       )}
     </section>
-  );
+  )
 }
 
 export function HeaderSection({
@@ -72,9 +57,9 @@ export function HeaderSection({
       handleAddVariable={handleAddVariable}
       handleRemoveVariable={handleRemoveVariable}
       handleExampleChange={handleExampleChange}
-      name="Agregar encabezado"
+      name='Agregar encabezado'
     />
-  );
+  )
 }
 
 export function BodySection({
@@ -95,9 +80,9 @@ export function BodySection({
       handleAddVariable={handleAddVariable}
       handleRemoveVariable={handleRemoveVariable}
       handleExampleChange={handleExampleChange}
-      name="Agregar cuerpo"
+      name='Agregar cuerpo'
     />
-  );
+  )
 }
 
 export function FooterSection({
@@ -118,8 +103,8 @@ export function FooterSection({
       handleAddVariable={handleAddVariable}
       handleRemoveVariable={handleRemoveVariable}
       handleExampleChange={handleExampleChange}
-      name="Agregar pie de página"
+      name='Agregar pie de página'
       allowVariables={false}
     />
-  );
+  )
 }

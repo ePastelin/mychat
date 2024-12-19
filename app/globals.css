@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
 
+
+@import '../components/dashboard/dashboard.css';
 @import '../styles/input.css';
 @import '../styles/chat.css';
 @import '../styles/template.css';
 @import '../styles/commons.css';
+@import '../components/users/users.css';
 
 @tailwind base;
 @tailwind components;
@@ -31,19 +34,22 @@ body {
 }
 
 p {
-  @apply text-text-50 text-sm
+  @apply text-text-50 text-sm leading-normal 
+}
+
+.global-container {
+  @apply grid grid-cols-12 max-h-screen
 }
 
 @layer utilities {
-  @variants responsive {
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
+  /* Chrome, Safari and Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
   }
 }
 

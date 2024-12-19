@@ -25,9 +25,23 @@ export default function Footer() {
   }
 
   const options = [
-    { id: 'home', text: 'Mensajes', redirect: '/chats', icon: <TbMessage2Minus className='text-4xl text-text-100 z-10' /> },
-    { id: 'phone-selector', text: 'Number', icon: <IoPhonePortraitOutline className='text-4xl text-text-50 z-10' /> },
-    { id: 'template', text: 'Plantillas', redirect: '/templates', icon: <CgTemplate className='text-4xl text-text-50 z-10' /> },
+    {
+      id: 'home',
+      text: 'Mensajes',
+      redirect: '/chats',
+      icon: <TbMessage2Minus className='text-4xl text-text-100 z-10' />,
+    },
+    {
+      id: 'phone-selector',
+      text: 'Number',
+      icon: <IoPhonePortraitOutline className='text-4xl text-text-50 z-10' />,
+    },
+    {
+      id: 'template',
+      text: 'Plantillas',
+      redirect: '/templates',
+      icon: <CgTemplate className='text-4xl text-text-50 z-10' />,
+    },
   ]
 
   return (

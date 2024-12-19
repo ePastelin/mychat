@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Principal */
+.dashboard-container {
+    @apply col-span-11 p-5 shadow-dropshadow-message flex flex-col gap-8 overflow-y-auto h-screen
+}
+
+.dashboard-header {
+    @apply flex flex-col gap-6
+}
+
+.dashboard-header > div {
+    @apply flex gap-6 grow
+}
+
+/* Commons */
+.show-numbers {
+    @apply bg-dashboard flex items-center justify-center gap-1 px-3 py-1 text-background rounded-full text-xs
+}
+
+.show-numbers--no-bg {
+    @apply bg-transparent text-text-100 font-bold
+}
+
+/* Users */
+.dashboard__users-container {
+    @apply flex gap-3 grow self-start
+}
+
+.dashboard__user-card {
+    @apply flex items-center basis-44 border border-icons border-opacity-35 rounded-full gap-2 py-1 pl-2 hover:bg-black hover:bg-opacity-5 transition delay-75
+}
+
+.dashboard__user-card__username {
+    @apply font-bold text-title
+}
+
+/* Principal card */
+.principal-card {
+    @apply w-60 flex flex-col gap-2
+}
+
+.principal-card__increase {
+    @apply flex items-center gap-2
+}
+
+.principal-card__increase__number {
+    @apply text-3xl font-bold
+}
+
+.principal-card__title {
+    @apply text-base text-title font-semibold
+}
+
+.principal-card__dates {
+    @apply text-sm
+}
+
+/* Secondary cards */
+
+.secondary-cards {
+    @apply flex grow gap-3 flex-wrap
+}
+
+.large-info-card {
+    @apply flex flex-col gap-2 basis-48 rounded-xl shadow-md p-3 grow
+}
+
+.large-info-card:hover {
+    @apply cursor-pointer bg-white delay-100 ease-in
+}
+
+.large-info-card--dark {
+    @apply bg-gray-950 hover:bg-gray-700
+}
+
+.large-info-card h2 {
+    @apply text-xs text-text-50
+}
+
+.large-info-card--dark h2 {
+    @apply text-gray-300
+}
+
+.large-info-card span {
+    @apply  font-bold
+}
+
+.large-info-card--dark span {
+    @apply text-background
+}
+
+.large-info-card__footer {
+    @apply flex items-center gap-1
+}
+
+.large-info-card__footer span {
+    @apply text-xs font-medium mr-auto;
+}
+
+.large-info-card__footer div {
+    @apply rounded-full bg-slate-200;
+}
+
+.large-info-card--dark .large-info-card__footer div {
+    @apply bg-background
+}
+
+.short-info-card {
+    @apply flex flex-col basis-32 items-center justify-between p-1 shadow-md rounded-xl
+}
+
+.short-info-card:hover {
+    @apply outline outline-1 outline-pink-300 delay-200 ease-in-out
+}
+
+.short-info-card h2 {
+    @apply text-sm font-medium
+}
+
+.date-selector__container {
+    @apply relative w-fit self-end 
+    
+}
+
+.date-selector__container select {
+    @apply appearance-none text-text-100 flex items-center rounded-xl pr-8 px-3 py-2 self-end text-xs font-bold transition-all duration-500;
+  
+    /* Fondo inicial: transparente con degradado desde la izquierda */
+    background-image: linear-gradient(to right, #db2777 50%, #e0e0e0 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0%; /* Posición inicial: mostrar transparente */
+  }
+  
+  .date-selector__container select:hover {
+    @apply cursor-pointer text-background;
+  
+    /* Mueve el fondo hacia la izquierda para llenar con naranja */
+    background-position: 0% 0%;
+  }
+
+.date-selector__container select:active {
+    @apply bg-[#db2777] text-background outline-none;
+  }
+
+.date-selector__container select:focus {
+    @apply outline-none;
+  }
+  
+
+.date-selector__container option {
+    @apply text-xs font-bold text-text-100 bg-background
+}
+
+
+.date-select__icon {
+    @apply absolute text-xs right-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none
+}
+
+.top-users {
+    @apply bg-gray-200 w-full rounded-full flex items-center p-1 gap-1 flex-wrap
+}
+
+.top-users__card {
+    @apply flex items-center bg-background rounded-full p-1 gap-2 basis-48
+}
+
+.top-users__card p {
+   @apply font-medium text-text-100
+}
+
+.top-users__card span {
+    @apply mr-2 text-text-50
+}
+
+.dashboard-body {
+    @apply flex gap-6 flex-wrap
+}
+
+.bar-container {
+    @apply flex flex-col bg-gray-100 rounded-2xl basis-1/4
+}
+
+.bar-container header {
+    @apply flex p-3 gap-3 items-center
+}
+
+.bar-container h3 {
+    @apply text-sm text-text-50
+}
+
+.bar-container > div {
+    @apply flex gap-8
+}
+
+.bar-container p {
+    @apply text-background
+}
+
+.bar-container > div div {
+    @apply flex flex-col items-center gap-2 text-slate-100 text-center text-xs bg-dashboard rounded-tr-xl rounded-bl-xl justify-center min-w-28 
+}
+
+.bar-container h4 {
+
+}
+
+.bar-container__icon {
+    @apply text-dashboard text-4xl
+}
+
+.chart__filter-select {
+    @apply bg-gray-100 text-text-50 ml-auto hover:cursor-pointer border border-gray-300 px-4 py-1 rounded-xl
+}

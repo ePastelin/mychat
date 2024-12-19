@@ -11,7 +11,7 @@ export default function Form() {
   const [error, setError] = useState(false)
 
   return (
-    <form className='flex flex-col items-center' onSubmit={(e) => login(username, password, e, setError)}>
+    <form role='form' name='form' className='flex flex-col items-center' onSubmit={(e) => login(username, password, e, setError)}>
       <InputText
         placeholder='Usuario'
         focus={true}

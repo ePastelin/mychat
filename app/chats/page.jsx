@@ -1,60 +1,58 @@
-"use client";
+'use client'
 
-import { Header } from "@/components/chat";
-import { Footer } from "@/components/common";
-import Side from "@/components/common/side/Side";
-import useSWR from "swr";
-import { useState } from "react";
-import { fetcher } from "@/hooks/api/fetcher";
-import ChatList from "@/components/chat/ChatList";
-import ChatDetails from "@/components/chat/ChatDetails";
-import Create from "@/components/template/create/Create";
-import SendTemplate from "@/components/template/sendTemplate/SendTemplate";
-import Users from "@/components/users/Users";
-import { useChatInfo } from "@/hooks/chat";
-import CircleLoader from "@/components/common/Loader";
+import Side from '@/components/common/side/Side'
+import useSWR from 'swr'
+import { useEffect, useState } from 'react'
+import { fetcher } from '@/hooks/api/fetcher'
+import Create from '@/components/template/create/Create'
+import SendTemplate from '@/components/template/sendTemplate/SendTemplate'
+import Users from '@/components/users/Users'
+import { useChatInfo } from '@/hooks/chat'
+import CircleLoader from '@/components/common/Loader'
+import { ChatContainer } from '@/components/chat/ChatContainer'
+import { useGlobalContext } from '@/context/Global.context'
+import Cookies from 'js-cookie'
+import { Dashboard } from '@/components/dashboard'
 
-const API = process.env.NEXT_PUBLIC_API_ROUTE;
+const API = process.env.NEXT_PUBLIC_API_ROUTE
 
 export default function Chats() {
-  const [screen, setScreen] = useState(1);
-  const [idChat, setIdChat] = useState(null);
-  const { chats, setChats, unreadMessages } = useChatInfo(idChat);
-  const {data, error} = useSWR(`${API}/chat`, fetcher, {
+  const [screen, setScreen] = useState(1)
+  const [idChat, setIdChat] = useState(null)
+  const { chats, setChats, unreadMessages } = useChatInfo(idChat)
+  const { setNumbers } = useGlobalContext()
+  const id = Cookies.get('idUser')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetcher(`/auth/numbers/${id}`)
+        setNumbers(response)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const { data, error } = useSWR(`${API}/chat`, fetcher, {
+    revalidateOnFocus: true, // Revalida al volver a la ventana
     onSuccess: (data) => {
-      setChats(data?.chats || []);
+      setChats(data?.chats || [])
     },
-  });
-  
-  if (error) return <div>Failed to load</div>;
-  if(!data) return <CircleLoader/>
+  })
+
+  if (error) return <div>Failed to load</div>
+  if (!data) return <CircleLoader />
 
   return (
-    <>
-      <div className="lg:hidden">
-        <div className="overflow-hidden px-6 lg:hidden">
-          <Header />
-          <ChatList chats={chats} setIdChat={setIdChat} />
-          <Footer />
-        </div>
-      </div>
-
-      <div className="hidden lg:grid md:grid-cols-12">
-        <Side setScreen={setScreen} screen={screen} unreadMessages={unreadMessages}/>
-        {screen === 1 && (
-          <>
-            <div className="md:col-span-3 w-full h-screen px-4 bg-white flex flex-col">
-              <ChatList chats={chats} setIdChat={setIdChat} />
-            </div>
-
-            <ChatDetails idChat={idChat} chats={chats} />
-          </>
-        )}
-
-        {screen === 2 && <SendTemplate setScreen={setScreen} />}
-        {screen === 3 && <Users />}
-        {screen === 4 && <Create setScreen={setScreen} />}
-      </div>
-    </>
-  );
+    <div className='global-container'>
+      <Side setScreen={setScreen} screen={screen} unreadMessages={unreadMessages} />
+      {screen === 1 && <ChatContainer chats={chats} idChat={idChat} setIdChat={setIdChat} />}
+      {screen === 2 && <SendTemplate setScreen={setScreen} />}
+      {screen === 3 && <Users />}
+      {screen === 4 && <Create setScreen={setScreen} />}
+      {screen === 5 && <Dashboard />}
+    </div>
+  )
 }

@@ -16,4 +16,3 @@ export default function Chat({ isUnread, setIsUnread }: any) {
     </section>
   )
 }
-

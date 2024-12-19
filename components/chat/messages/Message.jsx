@@ -1,10 +1,10 @@
-import { Profile, MessageSection, Input } from "./index";
-import useSWR from "swr";
-import { useMessages } from "@/hooks/chat.js";
-import { fetcher } from "@/hooks/api/fetcher";
-import CircleLoader from "@/components/common/Loader";
+import { Profile, MessageSection, Input } from './index'
+import useSWR from 'swr'
+import { useMessages } from '@/hooks/chat.js'
+import { fetcher } from '@/hooks/api/fetcher'
+import CircleLoader from '@/components/common/Loader'
 
-const API = process.env.NEXT_PUBLIC_API_ROUTE;
+const API = process.env.NEXT_PUBLIC_API_ROUTE
 
 export default function Message({ idChat, chat }) {
   const {
@@ -18,27 +18,27 @@ export default function Message({ idChat, chat }) {
     messages,
     setMessages,
     lastMessageRef,
-  } = useMessages(idChat);
+  } = useMessages(idChat)
 
   const { data, error } = useSWR(`${API}/chat/${idChat}`, fetcher, {
     onSuccess: (fetchedMessages) => {
       setMessages((prevMessages) => ({
         ...prevMessages,
         [idChat]: fetchedMessages,
-      }));
+      }))
     },
-  });
+  })
 
-  if (error) return <div>Failed to load</div>;
+  if (error) return <div>Failed to load</div>
 
-  const { socio_name, isActive } = chat;
+  const { socio_name, isActive } = chat
 
   return (
-    <div className="h-screen md:col-span-8 w-full flex flex-col">
+    <div className='h-screen col-span-8 w-full flex flex-col'>
       <Profile name={socio_name} isActive={isActive} />
       {!data ? (
-        <div className="messageLayout">
-          <CircleLoader withSize="w-full" />
+        <div className='messageLayout'>
+          <CircleLoader withSize='w-full' />
         </div>
       ) : (
         <MessageSection messages={messages || []} lastMessageRef={lastMessageRef} />
@@ -56,5 +56,5 @@ export default function Message({ idChat, chat }) {
         isActive={isActive}
       />
     </div>
-  );
+  )
 }

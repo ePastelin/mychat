@@ -8,7 +8,7 @@ export default function Sender({ message, setMessage, handleSendMessage, adjustT
         setMessage(e.target.value)
         adjustTextareaHeight(textareaRef)
       }}
-      placeholder= {`${isActive ? 'Escribe tu mensaje' : 'El usuario desactivó el chat'}`}
+      placeholder={`${isActive ? 'Escribe tu mensaje' : 'El usuario desactivó el chat'}`}
       onKeyPress={(e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault()
@@ -21,4 +21,3 @@ export default function Sender({ message, setMessage, handleSendMessage, adjustT
     />
   )
 }
-
